@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.IO.Compression;
 using System.Text;
 using System.Text.RegularExpressions;
+using Ionic.Zlib;
 
 namespace Minecraft
 {
@@ -96,7 +96,7 @@ namespace Minecraft
                             c.RawData = new byte[exactLength - 1];
                             file.Read(c.RawData, 0, exactLength - 1);
 
-                            DeflateStream decompress = new DeflateStream(new MemoryStream(c.RawData), CompressionMode.Decompress);
+                            ZlibStream decompress = new ZlibStream(new MemoryStream(c.RawData), CompressionMode.Decompress);
                             MemoryStream mem = new MemoryStream();
                             decompress.CopyTo(mem);
                             mem.Seek(0, SeekOrigin.Begin);
@@ -164,7 +164,7 @@ namespace Minecraft
                             //this is the performance bottleneck when doing 1024 chunks in a row;
                             //trying to only do when necessary
                             MemoryStream mem = new MemoryStream();
-                            DeflateStream zlib = new DeflateStream(mem, CompressionMode.Compress);
+                            ZlibStream zlib = new ZlibStream(mem, CompressionMode.Compress);
                             c.Root.Write(zlib);
                             zlib.Close();
                             c.RawData = mem.ToArray();
