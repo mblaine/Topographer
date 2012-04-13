@@ -69,6 +69,7 @@ namespace TopographerUI
             radEnd.Enabled = true;
             btnRender.Enabled = true;
             btnOpenWorld.Enabled = true;
+            worker = null;
         }
 
         private void btnOpenWorld_Click(object sender, System.EventArgs e)
@@ -135,6 +136,22 @@ namespace TopographerUI
             {
                 dim = Dimension.End;
                 CheckForRegions();
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (worker != null && worker.IsAlive)
+            {
+                DialogResult res = MessageBox.Show(this, "A render is still in progress. Are you sure you want to quit?", "Topographer", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+                if (res == DialogResult.Yes)
+                {
+                    worker.Abort();
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
         }
     }
