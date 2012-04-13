@@ -1,0 +1,76 @@
+1;7e7e7e #stone
+2;62a238 #grass
+3;866043 #dirt
+4,43:3,44:3,67;7c7c7c #cobble, slabs, stairs
+5,43:2,44:2,53,47,85,107;a08250 #planks, slabs, stairs, bookshelf, fence, gate
+7;555555 #bedrock
+8,9;2a5fff #water
+10,11;f74700 #lava
+12;dbd3a0 #sand
+13;857d7d #gravel
+14;928e7d #gold ore
+15;89837f #iron ore
+16;727272 #coal ore
+17;a38452 #log
+18;2c5619 #leaves
+18:1;2d472d #pine leaves
+18:2;074b36 #birch leaves
+19;b5b538 #sponge	
+21;636f88 #lapis ore
+22;1d46a6 #lapis block
+23;676767 #dispenser
+24,43:1,44:1;dad29f #sandstone, slabs
+25;6c4734 #noteblock
+29;8d9462 #sticky piston
+32;946428 #dead bush
+33;9b8157 #piston
+35;dfdfdf #white wool
+35:1;ea8037 #orange
+35:2;bf4cc9 #magenta
+35:3;688bd4 #light blue
+35:4;c2b51c #yellow
+35:5;3bbd30 #lime green
+35:6;d9849b #pink
+35:7;434343 #dark gray
+35:8;9ea6a6 #light gray
+35:9;277596 #cyan
+35:10;8136c4 #purple
+35:11;27339a #blue
+35:12;56331c #brown
+35:13;384d18 #green
+35:14;a42d29 #red
+35:15;1b1717 #black
+37;f1f902 #yellow flower
+38;f7070f #red flower
+41;fbf152 #gold block
+42;e0e0e0 #iron block
+43,44;a3a3a3 #stone slabs	
+45,43:4,44:4,108;916052 #brick, slabs, stairs
+46;ad5238 #tnt
+48;697b69 #mossy cobble
+49;15131f #obsidian
+54;8e6525 #chest
+56;828f92 #diamond ore
+57;6fdfda #diamond block
+58;764e2f #workbench
+60;724b2d #farmland
+61,62;676767 #furnace
+73,74;866969 #redstone ore
+79;7eaeff #ice
+78,80;f1fcfc #snow cover, block
+81;0b5715 #cactus
+82;9fa4b1 #clay
+83;a0e080 #sugar cane
+84;734d39 #jukebox
+86,91;c27816 #pumpkin, jack-o-lantern
+87;703635 #netherrack
+88;543f33 #soul sand
+89,123,124;927848 #glowstone, redstone lamp
+98,43:5,44:5,109;7d7d7d #stone brick, slabs, stairs
+99;8d6a53 #huge brown mushroom
+100;b72725 #huge red mushroom
+103;969925 #melon
+110;6f6469 #mycelium
+111;13621c #lily pad
+112,113,114;2d171b #nether brick, fence, stairs
+121;dddfa5 #end stone
