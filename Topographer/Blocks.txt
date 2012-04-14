@@ -1,9 +1,8 @@
 1;7e7e7e #stone
 2;62a238 #grass
 3;866043 #dirt
-4,43:3,44:3,67;7c7c7c #cobble, slabs, stairs
-5,43:2,44:2,53,47,85,107;a08250 #planks, slabs, stairs, bookshelf, fence, gate
-7;555555 #bedrock
+4;7c7c7c #cobble
+5,47,85,107;a08250 #planks, bookshelf, fence, gate
 8,9;2a5fff #water
 10,11;f74700 #lava
 12;dbd3a0 #sand
@@ -15,16 +14,16 @@
 18;2c5619 #leaves
 18:1;2d472d #pine leaves
 18:2;074b36 #birch leaves
-19;b5b538 #sponge	
+19;b5b538 #sponge
 21;636f88 #lapis ore
 22;1d46a6 #lapis block
 23;676767 #dispenser
-24,43:1,44:1;dad29f #sandstone, slabs
+24;dad29f #sandstone
 25;6c4734 #noteblock
 29;8d9462 #sticky piston
 32;946428 #dead bush
 33;9b8157 #piston
-35;dfdfdf #white wool
+35:0;dfdfdf #white wool
 35:1;ea8037 #orange
 35:2;bf4cc9 #magenta
 35:3;688bd4 #light blue
@@ -44,11 +43,8 @@
 38;f7070f #red flower
 41;fbf152 #gold block
 42;e0e0e0 #iron block
-43,44;a3a3a3 #stone slabs	
-45,43:4,44:4,108;916052 #brick, slabs, stairs
-46;ad5238 #tnt
+45;916052 #brick
 48;697b69 #mossy cobble
-49;15131f #obsidian
 54;8e6525 #chest
 56;828f92 #diamond ore
 57;6fdfda #diamond block
@@ -66,11 +62,53 @@
 87;703635 #netherrack
 88;543f33 #soul sand
 89,123,124;927848 #glowstone, redstone lamp
-98,43:5,44:5,109;7d7d7d #stone brick, slabs, stairs
+98;7d7d7d #stone brick
 99;8d6a53 #huge brown mushroom
 100;b72725 #huge red mushroom
 103;969925 #melon
 110;6f6469 #mycelium
 111;13621c #lily pad
-112,113,114;2d171b #nether brick, fence, stairs
+112,113;2d171b #nether brick, fence
 121;dddfa5 #end stone
+50;FFF032 #torch
+55:0;500000 #redstone wire, power: 0
+55:1;5A0000 #redstone wire, power: 1
+55:2;640000 #redstone wire, power: 2
+55:3;6E0000 #redstone wire, power: 3
+55:4;780000 #redstone wire, power: 4
+55:5;820000 #redstone wire, power: 5
+55:6;8C0000 #redstone wire, power: 6
+55:7;960000 #redstone wire, power: 7
+55:8;A00000 #redstone wire, power: 8
+55:9;AA0000 #redstone wire, power: 9
+55:10;B40000 #redstone wire, power: 10
+55:11;BE0000 #redstone wire, power: 11
+55:12;C80000 #redstone wire, power: 12
+55:13;D20000 #redstone wire, power: 13
+55:14;DC0000 #redstone wire, power: 14
+55:15;E60000 #redstone wire, power: 15
+94;FF6363 #repeater on
+93;996D6D #repeater off
+76;DC2D14 #rstorch on
+75;824839 #rstorch off
+30;DCDCDC #cobweb
+117;A0A06E #brewing stand
+116;822846 #enchantment table
+70;7e7e7e #stone pressure plate
+72;a08250 #wooden pressure plate
+26:0,26:1,26:2,26:3;8F0C13 #bed lower half
+26:8,26:9,26:10,26:11;B77C87 #bed higher half
+49;241351 #obsidian (mod)
+7;323232 #bedrock (mod)
+59;917B0E #wheat/seeds
+115;81080A #netherwart
+118;424242 #cauldron
+51;FC7800 #fire
+46;C13C17 #tnt
+43:0,44:0,44:8;a3a3a3 #stone slabs
+43:1,44:1,44:9;dad29f #sandstone slabs
+43:2,44:2,44:10,53;a08250 #wood slabs, stairs
+43:3,44:3,44:11,67;7c7c7c #cobble slabs, stairs
+43:4,44:4,44:12,108;916052 #bricks slabs, stairs
+43:5,44:5,44:13,109;7d7d7d #stone brick slabs, stairs
+114;2d171b #netherbrick stairs

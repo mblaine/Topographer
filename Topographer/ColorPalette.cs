@@ -32,6 +32,13 @@ namespace Topographer
                             table.Add(id, Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(m.Groups[2].Value, 16))));
                     }
                 }
+                #if DEBUG
+                else
+                {
+                    if(line.Trim().Length > 0)
+                        throw new Exception(String.Format("Malformed line:\"{0}\"", line));
+                }
+                #endif
             }
         }
 
