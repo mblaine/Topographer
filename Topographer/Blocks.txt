@@ -109,7 +109,7 @@
 83;a0e080 #sugar cane
 84;734d39 #jukebox
 86,91;c27816 #pumpkin, jack-o-lantern
-87;703635 #netherrack
+87;983936 #netherrack
 88;543f33 #soul sand
 89;927848 #glowstone
 90;562d88 #nether portal

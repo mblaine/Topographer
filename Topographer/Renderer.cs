@@ -21,6 +21,8 @@ namespace Topographer
         private String regionDir;
         private String outPath;
 
+        public int LimitHeight = 255;
+
         public Renderer(String regionDir, String outPath, UpdateStatus updateStatus = null, DoneCallback callback = null)
         {
             this.regionDir = regionDir;
@@ -100,7 +102,7 @@ namespace Topographer
             return b;
         }
 
-        private static void RenderChunk(Chunk c, Bitmap b, int offsetX, int offsetY)
+        private void RenderChunk(Chunk c, Bitmap b, int offsetX, int offsetY)
         {
             int[] heightmap = (int[])c.Root["Level"]["HeightMap"];
             TAG_Compound[] sections = new TAG_Compound[16];
@@ -118,11 +120,15 @@ namespace Topographer
             if (highest < 0)
                 return;
 
+            highest = ((highest + 1) * 16) - 1;
+            if (highest > LimitHeight)
+                highest = LimitHeight;
+
             for (int z = 0; z < 16; z++)
             {
                 for (int x = 0; x < 16; x++)
                 {
-                    int y = GetHeight(sections, x, z, ((highest + 1) * 16) - 1);
+                    int y = GetHeight(sections, x, z, highest);
                     byte id, data;
                     GetBlock(sections, x, y, z, out id, out data);
                     

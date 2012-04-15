@@ -36,7 +36,12 @@
             this.radOverworld = new System.Windows.Forms.RadioButton();
             this.btnRender = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.spnLimitHeight = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spnLimitHeight)).BeginInit();
             this.SuspendLayout();
             // 
             // txtWorldPath
@@ -130,11 +135,49 @@
             this.lblStatus.TabIndex = 4;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.spnLimitHeight);
+            this.groupBox2.Location = new System.Drawing.Point(263, 40);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(155, 53);
+            this.groupBox2.TabIndex = 5;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Options";
+            // 
+            // spnLimitHeight
+            // 
+            this.spnLimitHeight.Location = new System.Drawing.Point(98, 22);
+            this.spnLimitHeight.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.spnLimitHeight.Name = "spnLimitHeight";
+            this.spnLimitHeight.Size = new System.Drawing.Size(45, 22);
+            this.spnLimitHeight.TabIndex = 0;
+            this.spnLimitHeight.Value = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(86, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Limit Height:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(585, 103);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnRender);
             this.Controls.Add(this.groupBox1);
@@ -148,6 +191,9 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spnLimitHeight)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -163,6 +209,9 @@
         private System.Windows.Forms.RadioButton radOverworld;
         private System.Windows.Forms.Button btnRender;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown spnLimitHeight;
     }
 }
 

@@ -67,6 +67,7 @@ namespace TopographerUI
             radOverworld.Enabled = true;
             radNether.Enabled = true;
             radEnd.Enabled = true;
+            spnLimitHeight.Enabled = true;
             btnRender.Enabled = true;
             btnOpenWorld.Enabled = true;
             worker = null;
@@ -104,10 +105,12 @@ namespace TopographerUI
             radOverworld.Enabled = false;
             radNether.Enabled = false;
             radEnd.Enabled = false;
+            spnLimitHeight.Enabled = false;
             btnOpenWorld.Enabled = false;
             btnRender.Enabled = false;
 
             Renderer r = new Renderer(regionPath, dialog.FileName, UpdateStatus, ThreadDone);
+            r.LimitHeight = (int)spnLimitHeight.Value;
             worker = new Thread(new ThreadStart(r.Render));
             worker.Start();
         }
