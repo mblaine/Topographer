@@ -3,6 +3,7 @@
 3;866043 #dirt
 4;7c7c7c #cobble
 5,47,85,107;a08250 #planks, bookshelf, fence, gate
+7;323232 #bedrock
 8,9;2a5fff #water
 10,11;f74700 #lava
 12;dbd3a0 #sand
@@ -20,7 +21,10 @@
 23;676767 #dispenser
 24;dad29f #sandstone
 25;6c4734 #noteblock
+26:0,26:1,26:2,26:3;8F0C13 #bed lower half
+26:8,26:9,26:10,26:11;B77C87 #bed higher half
 29;8d9462 #sticky piston
+30;DCDCDC #cobweb
 32;946428 #dead bush
 33;9b8157 #piston
 35:0;dfdfdf #white wool
@@ -43,34 +47,19 @@
 38;f7070f #red flower
 41;fbf152 #gold block
 42;e0e0e0 #iron block
+43:0,44:0,44:8;a3a3a3 #stone slabs
+43:1,44:1,44:9;dad29f #sandstone slabs
+43:2,44:2,44:10,53;a08250 #wood slabs, stairs
+43:3,44:3,44:11,67;7c7c7c #cobble slabs, stairs
+43:4,44:4,44:12,108;916052 #bricks slabs, stairs
+43:5,44:5,44:13,109;7d7d7d #stone brick slabs, stairs
 45;916052 #brick
+46;C13C17 #tnt
 48;697b69 #mossy cobble
-54;8e6525 #chest
-56;828f92 #diamond ore
-57;6fdfda #diamond block
-58;764e2f #workbench
-60;724b2d #farmland
-61,62;676767 #furnace
-73,74;866969 #redstone ore
-79;7eaeff #ice
-78,80;f1fcfc #snow cover, block
-81;0b5715 #cactus
-82;9fa4b1 #clay
-83;a0e080 #sugar cane
-84;734d39 #jukebox
-86,91;c27816 #pumpkin, jack-o-lantern
-87;703635 #netherrack
-88;543f33 #soul sand
-89,123,124;927848 #glowstone, redstone lamp
-98;7d7d7d #stone brick
-99;8d6a53 #huge brown mushroom
-100;b72725 #huge red mushroom
-103;969925 #melon
-110;6f6469 #mycelium
-111;13621c #lily pad
-112,113;2d171b #nether brick, fence
-121;dddfa5 #end stone
+49;241351 #obsidian
 50;FFF032 #torch
+51;FC7800 #fire
+54;8e6525 #chest
 55:0;500000 #redstone wire, power: 0
 55:1;5A0000 #redstone wire, power: 1
 55:2;640000 #redstone wire, power: 2
@@ -87,28 +76,39 @@
 55:13;D20000 #redstone wire, power: 13
 55:14;DC0000 #redstone wire, power: 14
 55:15;E60000 #redstone wire, power: 15
-94;FF6363 #repeater on
-93;996D6D #repeater off
-76;DC2D14 #rstorch on
-75;824839 #rstorch off
-30;DCDCDC #cobweb
-117;A0A06E #brewing stand
-116;822846 #enchantment table
+56;828f92 #diamond ore
+57;6fdfda #diamond block
+58;764e2f #workbench
+59;917B0E #wheat/seeds
+60;724b2d #farmland
+61,62;676767 #furnace
 70;7e7e7e #stone pressure plate
 72;a08250 #wooden pressure plate
-26:0,26:1,26:2,26:3;8F0C13 #bed lower half
-26:8,26:9,26:10,26:11;B77C87 #bed higher half
-49;241351 #obsidian (mod)
-7;323232 #bedrock (mod)
-59;917B0E #wheat/seeds
-115;81080A #netherwart
-118;424242 #cauldron
-51;FC7800 #fire
-46;C13C17 #tnt
-43:0,44:0,44:8;a3a3a3 #stone slabs
-43:1,44:1,44:9;dad29f #sandstone slabs
-43:2,44:2,44:10,53;a08250 #wood slabs, stairs
-43:3,44:3,44:11,67;7c7c7c #cobble slabs, stairs
-43:4,44:4,44:12,108;916052 #bricks slabs, stairs
-43:5,44:5,44:13,109;7d7d7d #stone brick slabs, stairs
+73,74;866969 #redstone ore
+75;824839 #rstorch off
+76;DC2D14 #rstorch on
+79;7eaeff #ice
+78,80;f1fcfc #snow cover, block
+81;0b5715 #cactus
+82;9fa4b1 #clay
+83;a0e080 #sugar cane
+84;734d39 #jukebox
+86,91;c27816 #pumpkin, jack-o-lantern
+87;703635 #netherrack
+88;543f33 #soul sand
+89,123,124;927848 #glowstone, redstone lamp
+93;996D6D #repeater off
+94;FF6363 #repeater on
+98;7d7d7d #stone brick
+99;8d6a53 #huge brown mushroom
+100;b72725 #huge red mushroom
+103;969925 #melon
+110;6f6469 #mycelium
+111;13621c #lily pad
+112,113;2d171b #nether brick, fence
 114;2d171b #netherbrick stairs
+115;81080A #netherwart
+116;822846 #enchantment table
+117;A0A06E #brewing stand
+118;424242 #cauldron
+121;dddfa5 #end stone

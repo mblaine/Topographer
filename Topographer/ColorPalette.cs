@@ -16,7 +16,7 @@ namespace Topographer
             table = new Dictionary<String, Color>();
             
             Regex linePattern = new Regex(@"^([0-9:,]+);([0-9a-fA-F]{6})\s*(?:#.*)?$");
-            Regex idPattern = new Regex(@"^\d+(\:\d+)?$");
+            Regex idPattern = new Regex(@"^\d+(:?\:\d+)?$");
 
             String[] lines = File.ReadAllLines(String.Format("{0}{1}Blocks.txt",Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), Path.DirectorySeparatorChar));
 
