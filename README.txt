@@ -4,6 +4,10 @@ Topographer
 
 Please see LICENSE.txt.
 
+<< Changelog >>
+
+Please see CHANGELOG.txt.
+
 << About >>
 
 Topographer is a program for generating overhead maps of Minecraft worlds.

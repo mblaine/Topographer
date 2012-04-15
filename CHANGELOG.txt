@@ -1,0 +1,10 @@
+0.1 - 4/15/2012
+    * First release.
+    * Only supports worlds saved in the Anvil format introduced in Minecraft
+      1.2.
+    * Block ids and colors are read from Blocks.txt. The format for each line:
+        - blockId[:dataValue][,additionalIds];6-8 digit hex color code
+          [aa]rrggbb #optional comment
+        - If alpha isn't specified the color is assumed to be fully opaque.
+    * The height rendered down from can be adjusted. Useful when a lower slice
+      of the nether is needed, for example.
