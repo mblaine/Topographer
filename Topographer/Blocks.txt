@@ -1,10 +1,15 @@
+0;00000000 #air
 1;7e7e7e #stone
-2;62a238 #grass
+2,31;62a238 #grass, tall grass
 3;866043 #dirt
 4;7c7c7c #cobble
-5,47,85,107;a08250 #planks, bookshelf, fence, gate
+5,34,47,64,85,96,107;a08250 #planks, piston extension, wood door, bookshelf, fence, hatch, gate
+5:1;765834 #pine planks
+5:2;d4c285 #birch planks
+5:3;a97b58 #jungle planks
+6;408f2f #sapling
 7;323232 #bedrock
-8,9;2a5fff #water
+8,9;ee2a5fff #water
 10,11;f74700 #lava
 12;dbd3a0 #sand
 13;857d7d #gravel
@@ -13,9 +18,11 @@
 16;727272 #coal ore
 17;a38452 #log
 18;2c5619 #leaves
-18:1;2d472d #pine leaves
-18:2;074b36 #birch leaves
+18:1,18:5,18:9;2d472d #pine leaves
+18:2,18:6,18:10;074b36 #birch leaves
+18:3,18:7,18:11;1c6f02 #jungle leaves
 19;b5b538 #sponge
+20,102;33ffffff #glass, panes
 21;636f88 #lapis ore
 22;1d46a6 #lapis block
 23;676767 #dispenser
@@ -23,6 +30,7 @@
 25;6c4734 #noteblock
 26:0,26:1,26:2,26:3;8F0C13 #bed lower half
 26:8,26:9,26:10,26:11;B77C87 #bed higher half
+27;c9b26b #power rail
 29;8d9462 #sticky piston
 30;DCDCDC #cobweb
 32;946428 #dead bush
@@ -45,8 +53,10 @@
 35:15;1b1717 #black
 37;f1f902 #yellow flower
 38;f7070f #red flower
+39,99;8d6a53 #brown mushroom, huge
+40,100;b72725 #red mushroom, huge
 41;fbf152 #gold block
-42;e0e0e0 #iron block
+42,71,101;e0e0e0 #iron block, door, bars
 43:0,44:0,44:8;a3a3a3 #stone slabs
 43:1,44:1,44:9;dad29f #sandstone slabs
 43:2,44:2,44:10,53;a08250 #wood slabs, stairs
@@ -57,8 +67,9 @@
 46;C13C17 #tnt
 48;697b69 #mossy cobble
 49;241351 #obsidian
-50;FFF032 #torch
+50;88FFF032 #torch
 51;FC7800 #fire
+52;375063 #spawner
 54;8e6525 #chest
 55:0;500000 #redstone wire, power: 0
 55:1;5A0000 #redstone wire, power: 1
@@ -82,6 +93,10 @@
 59;917B0E #wheat/seeds
 60;724b2d #farmland
 61,62;676767 #furnace
+63,68;77a08250 #sign
+65;33a08250 #ladder
+66,28;877c6a #rail, detector rail
+69,77;447e7e7e #lever, button
 70;7e7e7e #stone pressure plate
 72;a08250 #wooden pressure plate
 73,74;866969 #redstone ore
@@ -96,13 +111,15 @@
 86,91;c27816 #pumpkin, jack-o-lantern
 87;703635 #netherrack
 88;543f33 #soul sand
-89,123,124;927848 #glowstone, redstone lamp
+89;927848 #glowstone
+90;562d88 #nether portal
+92;e6b6b7 #cake
 93;996D6D #repeater off
 94;FF6363 #repeater on
 98;7d7d7d #stone brick
-99;8d6a53 #huge brown mushroom
-100;b72725 #huge red mushroom
 103;969925 #melon
+104,105;3380b654 #pumpkin stem, melon stem
+106;33265f0d #vines
 110;6f6469 #mycelium
 111;13621c #lily pad
 112,113;2d171b #nether brick, fence
@@ -111,4 +128,9 @@
 116;822846 #enchantment table
 117;A0A06E #brewing stand
 118;424242 #cauldron
+119;142139 #end portal
+120;647c65 #end portal frame
 121;dddfa5 #end stone
+122;281132 #dragon egg
+123;865536 #redstone lamp off
+124;d0a26b #redstone lamp on

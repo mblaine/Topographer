@@ -15,7 +15,7 @@ namespace Topographer
         {
             table = new Dictionary<String, Color>();
             
-            Regex linePattern = new Regex(@"^([0-9:,]+);([0-9a-fA-F]{6})\s*(?:#.*)?$");
+            Regex linePattern = new Regex(@"^([0-9:,]+);([0-9a-fA-F]{6,8})\s*(?:#.*)?$");
             Regex idPattern = new Regex(@"^\d+(:?\:\d+)?$");
 
             String[] lines = File.ReadAllLines(String.Format("{0}{1}Blocks.txt",Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), Path.DirectorySeparatorChar));
@@ -29,7 +29,9 @@ namespace Topographer
                     foreach (String id in ids)
                     {
                         if (idPattern.IsMatch(id))
-                            table.Add(id, Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(m.Groups[2].Value, 16))));
+                        {
+                            table.Add(id, Color.FromArgb(Convert.ToInt32(m.Groups[2].Value.PadLeft(8, 'f'), 16)));
+                        }
                     }
                 }
                 #if DEBUG

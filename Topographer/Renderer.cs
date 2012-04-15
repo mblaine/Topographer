@@ -103,61 +103,83 @@ namespace Topographer
         private static void RenderChunk(Chunk c, Bitmap b, int offsetX, int offsetY)
         {
             int[] heightmap = (int[])c.Root["Level"]["HeightMap"];
-            Dictionary<int, TAG_Compound> sections = new Dictionary<int, TAG_Compound>();
+            TAG_Compound[] sections = new TAG_Compound[16];
+            int highest = -1;
             foreach (TAG t in (TAG[])c.Root["Level"]["Sections"])
             {
-                sections.Add((byte)t["Y"], (TAG_Compound)t);
+                byte index = (byte)t["Y"];
+                if (index > highest)
+                    highest = index;
+                sections[index] = (TAG_Compound)t;
+                
             }
 
             //chunk exists but all blocks are air
-            if (sections.Count == 0)
+            if (highest < 0)
                 return;
 
             for (int z = 0; z < 16; z++)
             {
                 for (int x = 0; x < 16; x++)
                 {
-                    int height = heightmap[z * 16 + x];
+                    int y = GetHeight(sections, x, z, ((highest + 1) * 16) - 1);
+                    byte id, data;
+                    GetBlock(sections, x, y, z, out id, out data);
+                    
+                    Color color = ColorPalette.Lookup(id, data);
 
-                    //trees runnning into the old height limit in converted worlds
-                    //seem to cause the heightmap entries for its columns to be -128;
-                    if (height < 0)
-                        height = 128;
-
-                    int sectionIndex = (int)Math.Floor((height - 1) / 16.0);
-                    int sectionAboveIndex = (int)Math.Floor(height / 16.0);
-
-                    int block = -1, damage = -1;
-                    if (sections.ContainsKey(sectionIndex))
+                    y--;
+                    while (color.A < 255 && y >= 0)
                     {
-                        byte[] blocks = (byte[])sections[sectionIndex]["Blocks"];
-                        byte[] data = (byte[])sections[sectionIndex]["Data"];
-                        int blockOffset = ((((height - 1) % 16) * 16 + z) * 16 + x);
-                        block = blocks[blockOffset];
-                        damage = data[(int)Math.Floor(blockOffset / 2.0)];
-                        if (blockOffset % 2 == 1)
-                            damage = (damage >> 4) & 0x0F;
-                        else
-                            damage = damage & 0x0F;
+                        GetBlock(sections, x, y, z, out id, out data);
+                        Color c2 = ColorPalette.Lookup(id, data);
+                        color = Blend(color, c2);
+                        y--;
                     }
-
-                    int blockAbove = block;
-                    if (sections.ContainsKey(sectionAboveIndex))
-                    {
-                        int blockAboveOffset = (((height % 16) * 16 + z) * 16 + x);
-                        byte[] blocksAbove = (byte[])sections[sectionAboveIndex]["Blocks"];
-                        blockAbove = blocksAbove[blockAboveOffset];
-                    }
-
-                    Color color = ColorPalette.Lookup(blockAbove, 0);
-                    if (color == Color.Black)
-                        color = ColorPalette.Lookup(block, damage);
-
+                    
                     //brighten/darken by height; arbitrary value, but /seems/ to look okay
-                    color = AddtoColor(color, (int)(height / 1.7 - 42));
+                    color = AddtoColor(color, (int)(y / 1.7 - 42));
 
                     b.SetPixel(offsetX + x, offsetY + z, color);
                 }
+            }
+        }
+
+        private static int GetHeight(TAG_Compound[] sections, int x, int z, int yStart = 255)
+        {
+            int h = yStart;
+            for (; h > 0; h--)
+            {
+                if (GetBlock(sections, x, h, z) != 0)
+                {
+                    return h;
+                }
+            }
+            return h;
+        }
+
+        private static byte GetBlock(TAG_Compound[] sections, int x, int y, int z)
+        {
+            byte id, data;
+            GetBlock(sections, x, y, z, out id, out data);
+            return id;
+        }
+
+        private static void GetBlock(TAG_Compound[] sections, int x, int y, int z, out byte id, out byte data)
+        {
+            id = 0;
+            data = 0;
+            int section = (int)Math.Floor(y / 16.0);
+
+            if (sections[section] != null)
+            {
+                int offset = ((y % 16) * 16 + z) * 16 + x;
+                id = ((byte[])sections[section]["Blocks"])[offset];
+                data = ((byte[])sections[section]["Data"])[offset >> 1];
+                if (offset % 2 == 0)
+                    data = (byte)(data & 0x0F);
+                else
+                    data = (byte)((data >> 4) & 0x0F);
             }
         }
 
@@ -179,6 +201,22 @@ namespace Topographer
             else if (blue < 0)
                 blue = 0;
             return Color.FromArgb(c.A, red, green, blue);
+        }
+
+        private static Color Blend(Color c1, Color c2)
+        {
+            if (c2.A == 0)
+                return c1;
+            else if(c1.A == 0)
+                return c2;
+
+            int a = (c1.A + c2.A) / 2;
+            if (c1.A == 255 || c2.A == 255)
+                a = 255;
+            int r = (c1.R + c2.R) / 2;
+            int g = (c1.G + c2.G) / 2;
+            int b = (c1.B + c2.B) / 2;
+            return Color.FromArgb(a, r, g, b);
         }
 
         public static int GetRegionCount(String regionDir)
