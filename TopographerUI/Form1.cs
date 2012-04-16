@@ -34,7 +34,7 @@ namespace TopographerUI
                     regionPath = String.Format("{0}{1}DIM-1{1}region", regionPath, Path.DirectorySeparatorChar);
                     break;
                 case Dimension.End:
-                    regionPath = String.Format("{0}{1}DIM-2{1}region", regionPath, Path.DirectorySeparatorChar);
+                    regionPath = String.Format("{0}{1}DIM1{1}region", regionPath, Path.DirectorySeparatorChar);
                     break;
             }
 
