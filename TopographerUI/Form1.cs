@@ -25,17 +25,35 @@ namespace TopographerUI
             if (txtWorldPath.Text.Length == 0)
                 return;
             regionPath = Path.GetDirectoryName(txtWorldPath.Text);
-            switch (dim)
+            if (Directory.Exists(String.Format("{0}{1}region", regionPath, Path.DirectorySeparatorChar)))
             {
-                case Dimension.Overworld:
-                    regionPath = String.Format("{0}{1}region", regionPath, Path.DirectorySeparatorChar);
-                    break;
-                case Dimension.Nether:
-                    regionPath = String.Format("{0}{1}DIM-1{1}region", regionPath, Path.DirectorySeparatorChar);
-                    break;
-                case Dimension.End:
-                    regionPath = String.Format("{0}{1}DIM1{1}region", regionPath, Path.DirectorySeparatorChar);
-                    break;
+                switch (dim)
+                {
+                    case Dimension.Overworld:
+                        regionPath = String.Format("{0}{1}region", regionPath, Path.DirectorySeparatorChar);
+                        break;
+                    case Dimension.Nether:
+                        regionPath = String.Format("{0}{1}DIM-1{1}region", regionPath, Path.DirectorySeparatorChar);
+                        break;
+                    case Dimension.End:
+                        regionPath = String.Format("{0}{1}DIM1{1}region", regionPath, Path.DirectorySeparatorChar);
+                        break;
+                }
+            }
+            else
+            {
+                switch (dim)
+                {
+                    case Dimension.Overworld:
+                        regionPath = String.Format("{0}{1}worlds{1}overworld{1}regions", regionPath, Path.DirectorySeparatorChar);
+                        break;
+                    case Dimension.Nether:
+                        regionPath = String.Format("{0}{1}worlds{1}nether{1}regions", regionPath, Path.DirectorySeparatorChar);
+                        break;
+                    case Dimension.End:
+                        regionPath = String.Format("{0}{1}worlds{1}the_end{1}regions", regionPath, Path.DirectorySeparatorChar);
+                        break;
+                }
             }
 
             if (Renderer.GetRegionCount(regionPath) > 0)
