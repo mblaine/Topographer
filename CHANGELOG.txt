@@ -1,3 +1,25 @@
+0.2 - 4/16/2012
+    * Block colors can now vary by biome. New format for Blocks.txt:
+        - blockId[:dataValue][,additionalIds];[optional comma-separated biome
+          ids;]6-8 digit hex color code [aa]rrggbb #optional comment
+    * Now handles transparency correctly. For exapmle, water gets darker the
+      deeper it is.
+    * Made some features optional.
+        - Whether biomes are considered when looking up block color, or if the
+          default, biome-independent color for that block should be used.
+        - Whether height should be indicated by making areas ligher or darker.
+        - Whether transparent blocks should simply be displayed opaque.
+    * Added ability to render a color-coded biome map instead of the normal
+      terrain map.
+        - Colors are read from Biomes.txt. The format for each line:
+          comma-separated biome ids;6 digit hex color code rrggbb #optional
+          comment
+    * Added a few keyboard shortcuts.
+        - Ctrl + O to open a world.
+        - ESC to exit the program.
+    * Added support for upcoming changes to world directory structure.
+    * Fixed End region directory not being found.
+
 0.1 - 4/15/2012
     * First release.
     * Only supports worlds saved in the Anvil format introduced in Minecraft

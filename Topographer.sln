@@ -9,6 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minecraft", "Minecraft\Mine
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{95FFF03E-6547-4CB4-9E23-F4789EDFC729}"
 	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.txt = CHANGELOG.txt
 		LICENSE.txt = LICENSE.txt
 		README.txt = README.txt
 	EndProjectSection
