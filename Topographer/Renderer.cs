@@ -131,14 +131,15 @@ namespace Topographer
                     int y = GetHeight(sections, x, z, highest);
                     byte id, data;
                     GetBlock(sections, x, y, z, out id, out data);
+                    byte biome = ((byte[])c.Root["Level"]["Biomes"])[x + z * 16];
                     
-                    Color color = ColorPalette.Lookup(id, data);
+                    Color color = ColorPalette.Lookup(id, data, biome);
 
                     y--;
                     while (color.A < 255 && y >= 0)
                     {
                         GetBlock(sections, x, y, z, out id, out data);
-                        Color c2 = ColorPalette.Lookup(id, data);
+                        Color c2 = ColorPalette.Lookup(id, data, biome);
                         color = Blend(color, c2);
                         y--;
                     }
