@@ -44,9 +44,13 @@
             this.chkBiomeFoliage = new System.Windows.Forms.CheckBox();
             this.chkHeight = new System.Windows.Forms.CheckBox();
             this.chkTransparency = new System.Windows.Forms.CheckBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.radTerrain = new System.Windows.Forms.RadioButton();
+            this.radBiomes = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spnLimitHeight)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtWorldPath
@@ -243,11 +247,47 @@
             this.toolTip.SetToolTip(this.chkTransparency, "If checked areas beneath blocks such as water or glass will be visible.");
             this.chkTransparency.UseVisualStyleBackColor = true;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.radBiomes);
+            this.groupBox3.Controls.Add(this.radTerrain);
+            this.groupBox3.Location = new System.Drawing.Point(263, 39);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(252, 53);
+            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Render";
+            // 
+            // radTerrain
+            // 
+            this.radTerrain.AutoSize = true;
+            this.radTerrain.Checked = true;
+            this.radTerrain.Location = new System.Drawing.Point(6, 22);
+            this.radTerrain.Name = "radTerrain";
+            this.radTerrain.Size = new System.Drawing.Size(75, 21);
+            this.radTerrain.TabIndex = 0;
+            this.radTerrain.TabStop = true;
+            this.radTerrain.Text = "Terrain";
+            this.toolTip.SetToolTip(this.radTerrain, "Render the terrain of the world normally.");
+            this.radTerrain.UseVisualStyleBackColor = true;
+            // 
+            // radBiomes
+            // 
+            this.radBiomes.AutoSize = true;
+            this.radBiomes.Location = new System.Drawing.Point(87, 22);
+            this.radBiomes.Name = "radBiomes";
+            this.radBiomes.Size = new System.Drawing.Size(75, 21);
+            this.radBiomes.TabIndex = 1;
+            this.radBiomes.Text = "Biomes";
+            this.toolTip.SetToolTip(this.radBiomes, "Render a color coded map of biomes instead of the actual terrain.");
+            this.radBiomes.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(641, 179);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnRender);
@@ -266,6 +306,8 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spnLimitHeight)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -288,6 +330,9 @@
         private System.Windows.Forms.CheckBox chkTransparency;
         private System.Windows.Forms.CheckBox chkHeight;
         private System.Windows.Forms.CheckBox chkBiomeFoliage;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton radBiomes;
+        private System.Windows.Forms.RadioButton radTerrain;
     }
 }
 

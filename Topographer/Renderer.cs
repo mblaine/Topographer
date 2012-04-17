@@ -25,6 +25,7 @@ namespace Topographer
         public bool ConsiderBiomes = true;
         public bool ShowHeight = true;
         public bool Transparency = true;
+        public bool BiomeOverlay = false;
 
         public Renderer(String regionDir, String outPath, UpdateStatus updateStatus = null, DoneCallback callback = null)
         {
@@ -49,7 +50,10 @@ namespace Topographer
                 if (updateStatus != null)
                     updateStatus(String.Format(format, count));
                 RegionFile region = new RegionFile(path);
-                pieces.Add(new MapPiece(RenderRegion(region), region.Coords));
+                if (BiomeOverlay)
+                    pieces.Add(new MapPiece(RenderRegionBiomes(region), region.Coords));
+                else
+                    pieces.Add(new MapPiece(RenderRegion(region), region.Coords));
 
                 Coord c = new Coord(region.Coords);
                 c.RegiontoAbsolute();
@@ -105,7 +109,7 @@ namespace Topographer
             return b;
         }
 
-        public void RenderChunk(Chunk c, Bitmap b, int offsetX, int offsetY)
+        private void RenderChunk(Chunk c, Bitmap b, int offsetX, int offsetY)
         {
             int[] heightmap = (int[])c.Root["Level"]["HeightMap"];
             TAG_Compound[] sections = new TAG_Compound[16];
@@ -160,6 +164,38 @@ namespace Topographer
                         color = AddtoColor(color, (int)(y / 1.7 - 42));
                     }
 
+                    b.SetPixel(offsetX + x, offsetY + z, color);
+                }
+            }
+        }
+
+        private Bitmap RenderRegionBiomes(RegionFile region)
+        {
+            Bitmap b = new Bitmap(REGIONWIDTH, REGIONHEIGHT);
+
+            foreach (Chunk c in region.Chunks)
+            {
+                if (c == null || c.Root == null)
+                    continue;
+                Coord chunkOffset = new Coord(c.Coords);
+                chunkOffset.ChunktoRegionRelative();
+                chunkOffset.ChunktoAbsolute();
+                RenderChunkBiomes(c, b, chunkOffset.X, chunkOffset.Z);
+            }
+
+            return b;
+        }
+
+        private void RenderChunkBiomes(Chunk c, Bitmap b, int offsetX, int offsetY)
+        {
+            byte[] biomes = (byte[])c.Root["Level"]["Biomes"];
+
+            for (int z = 0; z < 16; z++)
+            {
+                for (int x = 0; x < 16; x++)
+                {
+                    byte biome = biomes[x + z * 16];
+                    Color color = ColorPalette.Lookup(biome);
                     b.SetPixel(offsetX + x, offsetY + z, color);
                 }
             }

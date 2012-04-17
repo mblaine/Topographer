@@ -49,6 +49,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Biomes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Blocks.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

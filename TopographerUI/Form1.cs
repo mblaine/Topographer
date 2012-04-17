@@ -132,7 +132,7 @@ namespace TopographerUI
 
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.InitialDirectory = lastSavePath;
-            dialog.FileName = String.Format("{0}{1}.png", Path.GetFileName(lastWorldPath), dim != Dimension.Overworld ? "." + dim.ToString().ToLower() : "");
+            dialog.FileName = String.Format("{0}{1}{2}.png", Path.GetFileName(lastWorldPath), dim != Dimension.Overworld ? "." + dim.ToString().ToLower() : "", radBiomes.Checked ? ".biomes" : "");
             dialog.Filter = "PNG (*.png)|*.png";
 
             if (dialog.ShowDialog() != DialogResult.OK)
@@ -147,6 +147,7 @@ namespace TopographerUI
             r.ConsiderBiomes = chkBiomeFoliage.Checked;
             r.ShowHeight = chkHeight.Checked;
             r.Transparency = chkTransparency.Checked;
+            r.BiomeOverlay = radBiomes.Checked;
             worker = new Thread(new ThreadStart(r.Render));
             worker.Start();
         }

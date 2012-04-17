@@ -1,0 +1,17 @@
+﻿0;0000FF #Ocean
+1;98FB98 #Plains
+2,17;DEB887 #Desert
+3,20;006400 #Extreme Hills
+4,18;008000 #Forest
+5,19;2E8B57 #Taiga
+6;008B8B #Swampland
+7;6495ED #River
+8;B22222 #Hell
+9;808080 #Sky
+10;00BFFF #Frozen Ocean
+11;87CEFA #Frozen River
+12;FFFFFF #Ice Plains
+13;D3D3D3 #Ice Mountains
+14,15;008080 #Mushroom Island
+16;F5F5DC #Beach
+21,22;32CD32 #Jungle
