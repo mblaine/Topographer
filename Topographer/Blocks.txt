@@ -2,10 +2,11 @@
 1;7e7e7e #stone
 2,31;62a238 #grass, tall grass (default)
 2,31;1;779c49 #grass, tall grass (plains)
-2,31;2,17;779c49 #grass, tall grass (desert)
-2,31;5,19,12,13,10,11;5d8169 #grass, tall grass (taiga, tundra, frozen ocean, river)
+2,31;2,17,8;779c49 #grass, tall grass (desert, nether)
+2,31;5,19,12,13,10,11;577963 #grass, tall grass (taiga, tundra, frozen ocean, river)
 2,31;6;5a664c #grass, tall grass (swamp)
 2,31;21,22;409c2a #grass, tall grass (jungle)
+2,31;3,20;557055 #grass, tall grass (extreme hills)
 3;866043 #dirt
 4;7c7c7c #cobble
 5,34,47,64,85,96,107;a08250 #planks, piston extension, wood door, bookshelf, fence, hatch, gate
