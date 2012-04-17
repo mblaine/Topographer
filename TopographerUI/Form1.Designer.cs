@@ -38,15 +38,15 @@
             this.btnRender = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkTransparency = new System.Windows.Forms.CheckBox();
+            this.chkHeight = new System.Windows.Forms.CheckBox();
+            this.chkBiomeFoliage = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.spnLimitHeight = new System.Windows.Forms.NumericUpDown();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.chkBiomeFoliage = new System.Windows.Forms.CheckBox();
-            this.chkHeight = new System.Windows.Forms.CheckBox();
-            this.chkTransparency = new System.Windows.Forms.CheckBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.radTerrain = new System.Windows.Forms.RadioButton();
             this.radBiomes = new System.Windows.Forms.RadioButton();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spnLimitHeight)).BeginInit();
@@ -61,13 +61,13 @@
             this.txtWorldPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtWorldPath.Name = "txtWorldPath";
             this.txtWorldPath.ReadOnly = true;
-            this.txtWorldPath.Size = new System.Drawing.Size(503, 22);
+            this.txtWorldPath.Size = new System.Drawing.Size(425, 22);
             this.txtWorldPath.TabIndex = 0;
             // 
             // btnOpenWorld
             // 
             this.btnOpenWorld.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenWorld.Location = new System.Drawing.Point(521, 11);
+            this.btnOpenWorld.Location = new System.Drawing.Point(443, 11);
             this.btnOpenWorld.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnOpenWorld.Name = "btnOpenWorld";
             this.btnOpenWorld.Size = new System.Drawing.Size(108, 23);
@@ -135,7 +135,7 @@
             // 
             this.btnRender.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRender.Enabled = false;
-            this.btnRender.Location = new System.Drawing.Point(521, 39);
+            this.btnRender.Location = new System.Drawing.Point(443, 39);
             this.btnRender.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRender.Name = "btnRender";
             this.btnRender.Size = new System.Drawing.Size(108, 23);
@@ -151,7 +151,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus.Location = new System.Drawing.Point(12, 151);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(617, 23);
+            this.lblStatus.Size = new System.Drawing.Size(539, 23);
             this.lblStatus.TabIndex = 4;
             this.lblStatus.Text = "Ready";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -167,10 +167,49 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox2.Size = new System.Drawing.Size(503, 53);
+            this.groupBox2.Size = new System.Drawing.Size(539, 53);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Options";
+            // 
+            // chkTransparency
+            // 
+            this.chkTransparency.AutoSize = true;
+            this.chkTransparency.Checked = true;
+            this.chkTransparency.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkTransparency.Location = new System.Drawing.Point(372, 24);
+            this.chkTransparency.Name = "chkTransparency";
+            this.chkTransparency.Size = new System.Drawing.Size(118, 21);
+            this.chkTransparency.TabIndex = 4;
+            this.chkTransparency.Text = "Transparency";
+            this.toolTip.SetToolTip(this.chkTransparency, "If checked areas beneath blocks such as water or glass will be visible.");
+            this.chkTransparency.UseVisualStyleBackColor = true;
+            // 
+            // chkHeight
+            // 
+            this.chkHeight.AutoSize = true;
+            this.chkHeight.Checked = true;
+            this.chkHeight.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkHeight.Location = new System.Drawing.Point(295, 24);
+            this.chkHeight.Name = "chkHeight";
+            this.chkHeight.Size = new System.Drawing.Size(71, 21);
+            this.chkHeight.TabIndex = 3;
+            this.chkHeight.Text = "Height";
+            this.toolTip.SetToolTip(this.chkHeight, "If checked colors are made lighter or darker based on elevation.");
+            this.chkHeight.UseVisualStyleBackColor = true;
+            // 
+            // chkBiomeFoliage
+            // 
+            this.chkBiomeFoliage.AutoSize = true;
+            this.chkBiomeFoliage.Checked = true;
+            this.chkBiomeFoliage.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkBiomeFoliage.Location = new System.Drawing.Point(170, 24);
+            this.chkBiomeFoliage.Name = "chkBiomeFoliage";
+            this.chkBiomeFoliage.Size = new System.Drawing.Size(119, 21);
+            this.chkBiomeFoliage.TabIndex = 2;
+            this.chkBiomeFoliage.Text = "Biome Foliage";
+            this.toolTip.SetToolTip(this.chkBiomeFoliage, "If checked blocks such as grass will have their color vary based on biome.");
+            this.chkBiomeFoliage.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -208,56 +247,6 @@
             this.toolTip.InitialDelay = 400;
             this.toolTip.ReshowDelay = 80;
             // 
-            // chkBiomeFoliage
-            // 
-            this.chkBiomeFoliage.AutoSize = true;
-            this.chkBiomeFoliage.Checked = true;
-            this.chkBiomeFoliage.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBiomeFoliage.Location = new System.Drawing.Point(170, 24);
-            this.chkBiomeFoliage.Name = "chkBiomeFoliage";
-            this.chkBiomeFoliage.Size = new System.Drawing.Size(119, 21);
-            this.chkBiomeFoliage.TabIndex = 2;
-            this.chkBiomeFoliage.Text = "Biome Foliage";
-            this.toolTip.SetToolTip(this.chkBiomeFoliage, "If checked blocks such as grass will have their color vary based on biome.");
-            this.chkBiomeFoliage.UseVisualStyleBackColor = true;
-            // 
-            // chkHeight
-            // 
-            this.chkHeight.AutoSize = true;
-            this.chkHeight.Checked = true;
-            this.chkHeight.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkHeight.Location = new System.Drawing.Point(295, 24);
-            this.chkHeight.Name = "chkHeight";
-            this.chkHeight.Size = new System.Drawing.Size(71, 21);
-            this.chkHeight.TabIndex = 3;
-            this.chkHeight.Text = "Height";
-            this.toolTip.SetToolTip(this.chkHeight, "If checked colors are made lighter or darker based on elevation.");
-            this.chkHeight.UseVisualStyleBackColor = true;
-            // 
-            // chkTransparency
-            // 
-            this.chkTransparency.AutoSize = true;
-            this.chkTransparency.Checked = true;
-            this.chkTransparency.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkTransparency.Location = new System.Drawing.Point(372, 24);
-            this.chkTransparency.Name = "chkTransparency";
-            this.chkTransparency.Size = new System.Drawing.Size(118, 21);
-            this.chkTransparency.TabIndex = 4;
-            this.chkTransparency.Text = "Transparency";
-            this.toolTip.SetToolTip(this.chkTransparency, "If checked areas beneath blocks such as water or glass will be visible.");
-            this.chkTransparency.UseVisualStyleBackColor = true;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.radBiomes);
-            this.groupBox3.Controls.Add(this.radTerrain);
-            this.groupBox3.Location = new System.Drawing.Point(263, 39);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(252, 53);
-            this.groupBox3.TabIndex = 6;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Render";
-            // 
             // radTerrain
             // 
             this.radTerrain.AutoSize = true;
@@ -282,11 +271,22 @@
             this.toolTip.SetToolTip(this.radBiomes, "Render a color coded map of biomes instead of the actual terrain.");
             this.radBiomes.UseVisualStyleBackColor = true;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.radBiomes);
+            this.groupBox3.Controls.Add(this.radTerrain);
+            this.groupBox3.Location = new System.Drawing.Point(263, 39);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(174, 53);
+            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Render";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(641, 179);
+            this.ClientSize = new System.Drawing.Size(563, 179);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.lblStatus);
