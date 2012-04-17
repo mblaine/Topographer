@@ -9,7 +9,7 @@
 5:3;a97b58 #jungle planks
 6;408f2f #sapling
 7;323232 #bedrock
-8,9;ee2a5fff #water
+8,9;665e86ff #water
 10,11;f74700 #lava
 12;dbd3a0 #sand
 13;857d7d #gravel
@@ -22,7 +22,7 @@
 18:2,18:6,18:10;074b36 #birch leaves
 18:3,18:7,18:11;1c6f02 #jungle leaves
 19;b5b538 #sponge
-20,102;33ffffff #glass, panes
+20,102;88ffffff #glass, panes
 21;636f88 #lapis ore
 22;1d46a6 #lapis block
 23;676767 #dispenser
@@ -94,7 +94,7 @@
 60;724b2d #farmland
 61,62;676767 #furnace
 63,68;77a08250 #sign
-65;33a08250 #ladder
+65;00a08250 #ladder
 66,28;877c6a #rail, detector rail
 69,77;447e7e7e #lever, button
 70;7e7e7e #stone pressure plate
@@ -102,7 +102,7 @@
 73,74;866969 #redstone ore
 75;824839 #rstorch off
 76;DC2D14 #rstorch on
-79;7eaeff #ice
+79;d77eaeff #ice
 78,80;f1fcfc #snow cover, block
 81;0b5715 #cactus
 82;9fa4b1 #clay
@@ -119,7 +119,7 @@
 98;7d7d7d #stone brick
 103;969925 #melon
 104,105;3380b654 #pumpkin stem, melon stem
-106;33265f0d #vines
+106;003b9314 #vines
 110;6f6469 #mycelium
 111;13621c #lily pad
 112,113;2d171b #nether brick, fence

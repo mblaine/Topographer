@@ -216,13 +216,19 @@ namespace Topographer
             else if(c1.A == 0)
                 return c2;
 
-            int a = (c1.A + c2.A) / 2;
+            double a1 = c1.A / 255.0;
+            double a2 = c2.A / 255.0;
+            a2 *= (1.0 - a1);
+            double a = a1 + a2;
+
+            int r = (int)(c1.R * a1 + c2.R * a2);
+            int g = (int)(c1.G * a1 + c2.G * a2);
+            int b = (int)(c1.B * a1 + c2.B * a2);
+            a *= 255;
+            
             if (c1.A == 255 || c2.A == 255)
                 a = 255;
-            int r = (c1.R + c2.R) / 2;
-            int g = (c1.G + c2.G) / 2;
-            int b = (c1.B + c2.B) / 2;
-            return Color.FromArgb(a, r, g, b);
+            return Color.FromArgb((int)a, r, g, b);
         }
 
         public static int GetRegionCount(String regionDir)
