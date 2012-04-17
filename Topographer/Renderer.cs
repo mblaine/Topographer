@@ -22,6 +22,9 @@ namespace Topographer
         private String outPath;
 
         public int LimitHeight = 255;
+        public bool ConsiderBiomes = true;
+        public bool ShowHeight = true;
+        public bool Transparency = true;
 
         public Renderer(String regionDir, String outPath, UpdateStatus updateStatus = null, DoneCallback callback = null)
         {
@@ -80,7 +83,7 @@ namespace Topographer
             map.Dispose();
 
             if (updateStatus != null)
-                updateStatus("");
+                updateStatus("Done");
             if (callback != null)
                 callback();
         }
@@ -102,7 +105,7 @@ namespace Topographer
             return b;
         }
 
-        private void RenderChunk(Chunk c, Bitmap b, int offsetX, int offsetY)
+        public void RenderChunk(Chunk c, Bitmap b, int offsetX, int offsetY)
         {
             int[] heightmap = (int[])c.Root["Level"]["HeightMap"];
             TAG_Compound[] sections = new TAG_Compound[16];
@@ -131,21 +134,31 @@ namespace Topographer
                     int y = GetHeight(sections, x, z, highest);
                     byte id, data;
                     GetBlock(sections, x, y, z, out id, out data);
-                    byte biome = ((byte[])c.Root["Level"]["Biomes"])[x + z * 16];
+                    byte biome = 255;
+                    if(ConsiderBiomes)
+                        biome = ((byte[])c.Root["Level"]["Biomes"])[x + z * 16];
                     
                     Color color = ColorPalette.Lookup(id, data, biome);
 
-                    y--;
-                    while (color.A < 255 && y >= 0)
+                    if (Transparency)
                     {
-                        GetBlock(sections, x, y, z, out id, out data);
-                        Color c2 = ColorPalette.Lookup(id, data, biome);
-                        color = Blend(color, c2);
                         y--;
+                        while (color.A < 255 && y >= 0)
+                        {
+                            GetBlock(sections, x, y, z, out id, out data);
+                            Color c2 = ColorPalette.Lookup(id, data, biome);
+                            color = Blend(color, c2);
+                            y--;
+                        }
                     }
-                    
-                    //brighten/darken by height; arbitrary value, but /seems/ to look okay
-                    color = AddtoColor(color, (int)(y / 1.7 - 42));
+                    else
+                        color = Color.FromArgb(255, color.R, color.G, color.B);
+
+                    if (ShowHeight)
+                    {
+                        //brighten/darken by height; arbitrary value, but /seems/ to look okay
+                        color = AddtoColor(color, (int)(y / 1.7 - 42));
+                    }
 
                     b.SetPixel(offsetX + x, offsetY + z, color);
                 }

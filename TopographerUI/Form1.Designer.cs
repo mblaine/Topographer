@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtWorldPath = new System.Windows.Forms.TextBox();
             this.btnOpenWorld = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -39,6 +40,10 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.spnLimitHeight = new System.Windows.Forms.NumericUpDown();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.chkBiomeFoliage = new System.Windows.Forms.CheckBox();
+            this.chkHeight = new System.Windows.Forms.CheckBox();
+            this.chkTransparency = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spnLimitHeight)).BeginInit();
@@ -64,6 +69,7 @@
             this.btnOpenWorld.Size = new System.Drawing.Size(108, 23);
             this.btnOpenWorld.TabIndex = 1;
             this.btnOpenWorld.Text = "Open World";
+            this.toolTip.SetToolTip(this.btnOpenWorld, "Select a world to render.");
             this.btnOpenWorld.UseVisualStyleBackColor = true;
             this.btnOpenWorld.Click += new System.EventHandler(this.btnOpenWorld_Click);
             // 
@@ -87,7 +93,7 @@
             this.radEnd.Location = new System.Drawing.Point(184, 22);
             this.radEnd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radEnd.Name = "radEnd";
-            this.radEnd.Size = new System.Drawing.Size(72, 26);
+            this.radEnd.Size = new System.Drawing.Size(54, 21);
             this.radEnd.TabIndex = 2;
             this.radEnd.TabStop = true;
             this.radEnd.Text = "End";
@@ -100,7 +106,7 @@
             this.radNether.Location = new System.Drawing.Point(107, 22);
             this.radNether.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radNether.Name = "radNether";
-            this.radNether.Size = new System.Drawing.Size(96, 26);
+            this.radNether.Size = new System.Drawing.Size(72, 21);
             this.radNether.TabIndex = 1;
             this.radNether.TabStop = true;
             this.radNether.Text = "Nether";
@@ -114,7 +120,7 @@
             this.radOverworld.Location = new System.Drawing.Point(7, 22);
             this.radOverworld.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radOverworld.Name = "radOverworld";
-            this.radOverworld.Size = new System.Drawing.Size(124, 26);
+            this.radOverworld.Size = new System.Drawing.Size(93, 21);
             this.radOverworld.TabIndex = 0;
             this.radOverworld.TabStop = true;
             this.radOverworld.Text = "Overworld";
@@ -131,27 +137,33 @@
             this.btnRender.Size = new System.Drawing.Size(108, 23);
             this.btnRender.TabIndex = 3;
             this.btnRender.Text = "Render";
+            this.toolTip.SetToolTip(this.btnRender, "Generate and save a map of the chosen world.");
             this.btnRender.UseVisualStyleBackColor = true;
             this.btnRender.Click += new System.EventHandler(this.btnRender_Click);
             // 
             // lblStatus
             // 
-            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblStatus.Location = new System.Drawing.Point(319, 70);
+            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblStatus.Location = new System.Drawing.Point(12, 151);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(309, 23);
+            this.lblStatus.Size = new System.Drawing.Size(617, 23);
             this.lblStatus.TabIndex = 4;
+            this.lblStatus.Text = "Ready";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.chkTransparency);
+            this.groupBox2.Controls.Add(this.chkHeight);
+            this.groupBox2.Controls.Add(this.chkBiomeFoliage);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.spnLimitHeight);
-            this.groupBox2.Location = new System.Drawing.Point(263, 39);
+            this.groupBox2.Location = new System.Drawing.Point(12, 96);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox2.Size = new System.Drawing.Size(165, 53);
+            this.groupBox2.Size = new System.Drawing.Size(503, 53);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Options";
@@ -164,6 +176,7 @@
             this.label1.Size = new System.Drawing.Size(86, 17);
             this.label1.TabIndex = 1;
             this.label1.Text = "Limit Height:";
+            this.toolTip.SetToolTip(this.label1, "Only render the world below the specified elevation.");
             // 
             // spnLimitHeight
             // 
@@ -177,17 +190,64 @@
             this.spnLimitHeight.Name = "spnLimitHeight";
             this.spnLimitHeight.Size = new System.Drawing.Size(56, 22);
             this.spnLimitHeight.TabIndex = 0;
+            this.toolTip.SetToolTip(this.spnLimitHeight, "Only render the world below the specified elevation.");
             this.spnLimitHeight.Value = new decimal(new int[] {
             255,
             0,
             0,
             0});
             // 
+            // toolTip
+            // 
+            this.toolTip.AutomaticDelay = 400;
+            this.toolTip.AutoPopDelay = 8000;
+            this.toolTip.InitialDelay = 400;
+            this.toolTip.ReshowDelay = 80;
+            // 
+            // chkBiomeFoliage
+            // 
+            this.chkBiomeFoliage.AutoSize = true;
+            this.chkBiomeFoliage.Checked = true;
+            this.chkBiomeFoliage.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkBiomeFoliage.Location = new System.Drawing.Point(170, 24);
+            this.chkBiomeFoliage.Name = "chkBiomeFoliage";
+            this.chkBiomeFoliage.Size = new System.Drawing.Size(119, 21);
+            this.chkBiomeFoliage.TabIndex = 2;
+            this.chkBiomeFoliage.Text = "Biome Foliage";
+            this.toolTip.SetToolTip(this.chkBiomeFoliage, "If checked blocks such as grass will have their color vary based on biome.");
+            this.chkBiomeFoliage.UseVisualStyleBackColor = true;
+            // 
+            // chkHeight
+            // 
+            this.chkHeight.AutoSize = true;
+            this.chkHeight.Checked = true;
+            this.chkHeight.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkHeight.Location = new System.Drawing.Point(295, 24);
+            this.chkHeight.Name = "chkHeight";
+            this.chkHeight.Size = new System.Drawing.Size(71, 21);
+            this.chkHeight.TabIndex = 3;
+            this.chkHeight.Text = "Height";
+            this.toolTip.SetToolTip(this.chkHeight, "If checked colors are made lighter or darker based on elevation.");
+            this.chkHeight.UseVisualStyleBackColor = true;
+            // 
+            // chkTransparency
+            // 
+            this.chkTransparency.AutoSize = true;
+            this.chkTransparency.Checked = true;
+            this.chkTransparency.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkTransparency.Location = new System.Drawing.Point(372, 24);
+            this.chkTransparency.Name = "chkTransparency";
+            this.chkTransparency.Size = new System.Drawing.Size(118, 21);
+            this.chkTransparency.TabIndex = 4;
+            this.chkTransparency.Text = "Transparency";
+            this.toolTip.SetToolTip(this.chkTransparency, "If checked areas beneath blocks such as water or glass will be visible.");
+            this.chkTransparency.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(641, 103);
+            this.ClientSize = new System.Drawing.Size(641, 179);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnRender);
@@ -224,6 +284,10 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown spnLimitHeight;
+        private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.CheckBox chkTransparency;
+        private System.Windows.Forms.CheckBox chkHeight;
+        private System.Windows.Forms.CheckBox chkBiomeFoliage;
     }
 }
 

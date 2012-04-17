@@ -36,6 +36,15 @@ namespace TopographerUI
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+        private void EnableControls(bool enable)
+        {
+            foreach(Control c in this.Controls)
+            {
+                if (!(c is Label))
+                    c.Enabled = enable;
+            }
+        }
+
         private void CheckForRegions()
         {
             if (txtWorldPath.Text.Length == 0)
@@ -98,12 +107,7 @@ namespace TopographerUI
                 return;
             }
 
-            radOverworld.Enabled = true;
-            radNether.Enabled = true;
-            radEnd.Enabled = true;
-            spnLimitHeight.Enabled = true;
-            btnRender.Enabled = true;
-            btnOpenWorld.Enabled = true;
+            EnableControls(true);
             worker = null;
         }
 
@@ -136,15 +140,13 @@ namespace TopographerUI
 
             lastSavePath = Path.GetDirectoryName(dialog.FileName);
 
-            radOverworld.Enabled = false;
-            radNether.Enabled = false;
-            radEnd.Enabled = false;
-            spnLimitHeight.Enabled = false;
-            btnOpenWorld.Enabled = false;
-            btnRender.Enabled = false;
+            EnableControls(false);
 
             Renderer r = new Renderer(regionPath, dialog.FileName, UpdateStatus, ThreadDone);
             r.LimitHeight = (int)spnLimitHeight.Value;
+            r.ConsiderBiomes = chkBiomeFoliage.Checked;
+            r.ShowHeight = chkHeight.Checked;
+            r.Transparency = chkTransparency.Checked;
             worker = new Thread(new ThreadStart(r.Render));
             worker.Start();
         }
