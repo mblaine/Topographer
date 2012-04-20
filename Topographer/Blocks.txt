@@ -1,12 +1,16 @@
 0;00000000 #air
 1;7e7e7e #stone
-2,31;62a238 #grass, tall grass (default)
-2,31;1;779c49 #grass, tall grass (plains)
-2,31;2,17,8;779c49 #grass, tall grass (desert, nether)
-2,31;5,19,12,13,10,11;00a07d #grass, tall grass (taiga, tundra, frozen ocean, river)
-2,31;6;5a664c #grass, tall grass (swamp)
-2,31;21,22;409c2a #grass, tall grass (jungle)
-2,31;3,20;4c8a4c #grass, tall grass (extreme hills)
+2,31;0,7,9;55773f #grass, tall grass (Ocean)
+2,31;1,16;587a2d #grass, tall grass (Plains)
+2,31;2,8,17;7c752b #grass, tall grass (Desert)
+2,31;3,20;537452 #grass, tall grass (Mountains)
+2,31;4,18;467d2e #grass, tall grass (Forest)
+2,31;5,19;4d745a #grass, tall grass (Taiga)
+2,31;10,11,12,13;4c735d #grass, tall grass (Snow)
+2,31;14,15;2b8319 #grass, tall grass (Mushroom)
+2,31;21,22;298413 #grass, tall grass (Jungle)
+2,31;6;2f3926 #grass, tall grass (Swamp)
+2,31;62a238 #grass, tall grass (default (Forest))
 3;866043 #dirt
 4;7c7c7c #cobble
 5,34,47,64,85,96,107;a08250 #planks, piston extension, wood door, bookshelf, fence, hatch, gate
@@ -15,7 +19,8 @@
 5:3;a97b58 #jungle planks
 6;408f2f #sapling
 7;323232 #bedrock
-8,9;665e86ff #water
+8,9;6;665e86b4 #water (Swamp)
+8,9;665e86ff #water (default (Forest))
 10,11;f74700 #lava
 12;dbd3a0 #sand
 13;857d7d #gravel
@@ -23,7 +28,17 @@
 15;89837f #iron ore
 16;727272 #coal ore
 17;a38452 #log
-18;2c5619 #leaves
+18;0,7,9;375c1e #leaves (Ocean)
+18;1,16;3a5e09 #leaves (Plains)
+18;2,8,17;615906 #leaves (Desert)
+18;3,20;345933 #leaves (Mountains)
+18;4,18;27610b #leaves (Forest)
+18;5,19;2d583a #leaves (Taiga)
+18;10,11,12,13;2b583e #leaves (Snow)
+18;14,15;769000 #leaves (Mushroom)
+18;21,22;066a00 #leaves (Jungle)
+18;6;1c2c10 #leaves (Swamp)
+18;27610b #leaves (default (Forest))
 18:1,18:5,18:9;2d472d #pine leaves
 18:2,18:6,18:10;074b36 #birch leaves
 18:3,18:7,18:11;1c6f02 #jungle leaves
