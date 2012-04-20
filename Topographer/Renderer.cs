@@ -239,6 +239,29 @@ namespace Topographer
             }
         }
 
+        private static byte GetLight(TAG_Compound[] sections, int x, int y, int z)
+        {
+            byte light = 15;
+
+            int section = (int)Math.Floor(y / 16.0);
+
+            if (sections[section] != null)
+            {
+                int offset = ((y % 16) * 16 + z) * 16 + x;
+                light = ((byte[])sections[section]["BlockLight"])[offset >> 1];
+                if (offset % 2 == 0)
+                    light = (byte)(light & 0x0F);
+                else
+                    light = (byte)((light >> 4) & 0x0F);
+            }
+
+            if (light > 15)
+                light = 15;
+            else if (light < 4)
+                light = 4;
+            return light;
+        }
+
         private static Color AddtoColor(Color c, int diff)
         {
             int red = c.R + diff;
