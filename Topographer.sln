@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		README.txt = README.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopographerCMD", "TopographerCMD\TopographerCMD.csproj", "{58BA0482-C575-4878-B186-2870AC4C4C5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,16 @@ Global
 		{250DBE26-8C5E-4E63-8DE9-CE4AAD652FC7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{250DBE26-8C5E-4E63-8DE9-CE4AAD652FC7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{250DBE26-8C5E-4E63-8DE9-CE4AAD652FC7}.Release|x86.ActiveCfg = Release|Any CPU
+		{58BA0482-C575-4878-B186-2870AC4C4C5C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{58BA0482-C575-4878-B186-2870AC4C4C5C}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{58BA0482-C575-4878-B186-2870AC4C4C5C}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{58BA0482-C575-4878-B186-2870AC4C4C5C}.Debug|x86.ActiveCfg = Debug|x86
+		{58BA0482-C575-4878-B186-2870AC4C4C5C}.Debug|x86.Build.0 = Debug|x86
+		{58BA0482-C575-4878-B186-2870AC4C4C5C}.Release|Any CPU.ActiveCfg = Release|x86
+		{58BA0482-C575-4878-B186-2870AC4C4C5C}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{58BA0482-C575-4878-B186-2870AC4C4C5C}.Release|Mixed Platforms.Build.0 = Release|x86
+		{58BA0482-C575-4878-B186-2870AC4C4C5C}.Release|x86.ActiveCfg = Release|x86
+		{58BA0482-C575-4878-B186-2870AC4C4C5C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

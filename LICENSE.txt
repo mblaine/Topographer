@@ -7,7 +7,11 @@ zlib. For more information please see:
 Microsoft Public License:
 http://dotnetzip.codeplex.com/SourceControl/changeset/view/85217#156553
 JZlib and zlib licensing information:
-http://dotnetzip.codeplex.com/SourceControl/changeset/view/85217#1579682 
+http://dotnetzip.codeplex.com/SourceControl/changeset/view/85217#1579682
+
+Topograper uses NDesk.Options which is released under the term of the MIT
+License. FOr more information, please see:
+http://www.ndesk.org/Options
 
 ==================================================== 
 
