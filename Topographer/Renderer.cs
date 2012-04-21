@@ -23,8 +23,6 @@ namespace Topographer
         private String regionDir;
         private String outPath;
 
-        private String[] paths = null;
-
         public int LimitHeight = 255;
         public bool ConsiderBiomes = true;
         public bool ShowHeight = true;
@@ -46,20 +44,14 @@ namespace Topographer
             this.log = log;
         }
 
-        public String[] GetRegionPaths()
-        {
-            if(paths == null)
-                paths = Directory.GetFiles(regionDir, "*.mca", SearchOption.TopDirectoryOnly);
-            return paths;
-        }
-
         public void Render()
         {
             List<MapPiece> pieces = new List<MapPiece>();
             Point topLeft = new Point(int.MaxValue, int.MaxValue);
             Point bottomRight = new Point(int.MinValue, int.MinValue);
 
-            GetRegionPaths();
+            String[] paths = Directory.GetFiles(regionDir, "*.mca", SearchOption.TopDirectoryOnly);
+            
             String format = String.Format("Reading region {{0}} of {0}", paths.Length);
             int count = 0;
             foreach (String path in paths)
@@ -108,6 +100,7 @@ namespace Topographer
                 }
             }
 
+            map = Crop(map);
             map.Save(outPath, ImageFormat.Png);
             map.Dispose();
 
@@ -329,6 +322,74 @@ namespace Topographer
             if (c1.A == 255 || c2.A == 255)
                 a = 255;
             return Color.FromArgb((int)a, r, g, b);
+        }
+
+        private static Bitmap Crop(Bitmap b)
+        {
+            int top = 0;
+            int bottom = b.Height - 1;
+            int left = 0;
+            int right = b.Width - 1;
+
+            bool stop = false;
+            for (int y = 0; y < b.Height && !stop; y++)
+            {
+                for (int x = 0; x < b.Width && !stop; x++)
+                {
+                    if (b.GetPixel(x, y).A > 0)
+                    {
+                        top = y;
+                        stop = true;
+                        break;
+                    }
+                }
+            }
+            
+            stop = false;
+            for (int y = b.Height - 1; y > top && !stop; y--)
+            {
+                for (int x = 0; x < b.Width && !stop; x++)
+                {
+                    if (b.GetPixel(x, y).A > 0)
+                    {
+                        bottom = y + 1;
+                        stop = true;
+                        break;
+                    }
+                }
+            }
+
+            stop = false;
+            for (int x = 0; x < b.Width && !stop; x++)
+            {
+                for(int y = 0; y < b.Height && !stop; y++)
+                {
+                    if (b.GetPixel(x, y).A > 0)
+                    {
+                        left = x;
+                        stop = true;
+                        break;
+                    }
+                }
+            }
+
+            stop = false;
+            for (int x = b.Width - 1; x > left && !stop; x--)
+            {
+                for (int y = 0; y < b.Height && !stop; y++)
+                {
+                    if (b.GetPixel(x, y).A > 0)
+                    {
+                        right = x + 1;
+                        stop = true;
+                        break;
+                    }
+                }
+            }
+
+            Bitmap ret = b.Clone(Rectangle.FromLTRB(left, top, right, bottom), b.PixelFormat);
+            b.Dispose();
+            return ret;
         }
 
         public static int GetRegionCount(String regionDir)

@@ -120,7 +120,7 @@ namespace TopographerCMD
             r.BiomeOverlay = biomeMap;
 
             if (dryRun)
-                Console.WriteLine(String.Format("Found {0} *.mcr region files.", r.GetRegionPaths().Length));
+                Console.WriteLine(String.Format("Found {0} *.mcr region files.", Renderer.GetRegionCount(inPath)));
             else
                 r.Render();
         }
