@@ -10,16 +10,20 @@ namespace Topographer
     public class Renderer
     {
         public delegate void UpdateStatus(String s);
-        private UpdateStatus updateStatus;
+        private UpdateStatus updateStatus = null;
 
         public delegate void DoneCallback();
-        DoneCallback callback;
+        private DoneCallback callback = null;
+
+        private TextWriter log = null;
 
         private const int REGIONWIDTH = 512;
         private const int REGIONHEIGHT = 512;
 
         private String regionDir;
         private String outPath;
+
+        private String[] paths = null;
 
         public int LimitHeight = 255;
         public bool ConsiderBiomes = true;
@@ -35,13 +39,27 @@ namespace Topographer
             this.callback = callback;
         }
 
+        public Renderer(String regionDir, String outPath, TextWriter log = null)
+        {
+            this.regionDir = regionDir;
+            this.outPath = outPath;
+            this.log = log;
+        }
+
+        public String[] GetRegionPaths()
+        {
+            if(paths == null)
+                paths = Directory.GetFiles(regionDir, "*.mca", SearchOption.TopDirectoryOnly);
+            return paths;
+        }
+
         public void Render()
         {
             List<MapPiece> pieces = new List<MapPiece>();
             Point topLeft = new Point(int.MaxValue, int.MaxValue);
             Point bottomRight = new Point(int.MinValue, int.MinValue);
 
-            String[] paths = Directory.GetFiles(regionDir, "*.mca", SearchOption.TopDirectoryOnly);
+            GetRegionPaths();
             String format = String.Format("Reading region {{0}} of {0}", paths.Length);
             int count = 0;
             foreach (String path in paths)
@@ -49,6 +67,11 @@ namespace Topographer
                 count++;
                 if (updateStatus != null)
                     updateStatus(String.Format(format, count));
+                if (log != null)
+                {
+                    log.Write(String.Format(format, count));
+                    log.WriteLine(String.Format(" :: {0}", Path.GetFileName(path)));
+                }
                 RegionFile region = new RegionFile(path);
                 if (BiomeOverlay)
                     pieces.Add(new MapPiece(RenderRegionBiomes(region), region.Coords));
@@ -71,6 +94,8 @@ namespace Topographer
             Bitmap map = new Bitmap(bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y);
             if (updateStatus != null)
                 updateStatus("Combining region maps");
+            if (log != null)
+                log.WriteLine("Combining region maps");
             using (Graphics g = Graphics.FromImage(map))
             {
                 foreach (MapPiece piece in pieces)
@@ -88,6 +113,8 @@ namespace Topographer
 
             if (updateStatus != null)
                 updateStatus("Done");
+            if (log != null)
+                log.WriteLine("Done");
             if (callback != null)
                 callback();
         }
