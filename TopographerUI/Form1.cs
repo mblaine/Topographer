@@ -143,7 +143,7 @@ namespace TopographerUI
             EnableControls(false);
 
             Renderer r = new Renderer(regionPath, dialog.FileName, UpdateStatus, ThreadDone);
-            r.LimitHeight = (int)spnLimitHeight.Value;
+            r.UpperLimit = (int)spnLimitHeight.Value;
             r.ConsiderBiomes = chkBiomeFoliage.Checked;
             r.ShowHeight = chkHeight.Checked;
             r.Transparency = chkTransparency.Checked;

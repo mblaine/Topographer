@@ -23,11 +23,14 @@ namespace Topographer
         private String regionDir;
         private String outPath;
 
-        public int LimitHeight = 255;
+        public int LowerLimit = 0;
+        public int UpperLimit = 255;
         public bool ConsiderBiomes = true;
         public bool ShowHeight = true;
         public bool Transparency = true;
         public bool BiomeOverlay = false;
+        public bool CropMap = true;
+        public uint Rotate = 0;
 
         public Renderer(String regionDir, String outPath, UpdateStatus updateStatus = null, DoneCallback callback = null)
         {
@@ -49,6 +52,13 @@ namespace Topographer
             List<MapPiece> pieces = new List<MapPiece>();
             Point topLeft = new Point(int.MaxValue, int.MaxValue);
             Point bottomRight = new Point(int.MinValue, int.MinValue);
+
+            if (LowerLimit > UpperLimit)
+            {
+                int temp = LowerLimit;
+                LowerLimit = UpperLimit;
+                UpperLimit = temp;
+            }
 
             String[] paths = Directory.GetFiles(regionDir, "*.mca", SearchOption.TopDirectoryOnly);
             
@@ -100,7 +110,16 @@ namespace Topographer
                 }
             }
 
-            map = Crop(map);
+            if(CropMap)
+                map = Crop(map);
+            Rotate = (Rotate % 360) / 90;
+            if (Rotate == 1)
+                map.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            else if (Rotate == 2)
+                map.RotateFlip(RotateFlipType.Rotate180FlipNone);
+            else if (Rotate == 3)
+                map.RotateFlip(RotateFlipType.Rotate270FlipNone);
+
             map.Save(outPath, ImageFormat.Png);
             map.Dispose();
 
@@ -148,14 +167,17 @@ namespace Topographer
                 return;
 
             highest = ((highest + 1) * 16) - 1;
-            if (highest > LimitHeight)
-                highest = LimitHeight;
+            if (highest > UpperLimit)
+                highest = UpperLimit;
+            if (highest < LowerLimit)
+                highest = LowerLimit;
 
             for (int z = 0; z < 16; z++)
             {
                 for (int x = 0; x < 16; x++)
                 {
-                    int y = GetHeight(sections, x, z, highest);
+                    int y = GetHeight(sections, x, z, highest, LowerLimit);
+
                     byte id, data;
                     GetBlock(sections, x, y, z, out id, out data);
                     byte biome = 255;
@@ -167,7 +189,7 @@ namespace Topographer
                     if (Transparency)
                     {
                         y--;
-                        while (color.A < 255 && y >= 0)
+                        while (color.A < 255 && y >= LowerLimit)
                         {
                             GetBlock(sections, x, y, z, out id, out data);
                             Color c2 = ColorPalette.Lookup(id, data, biome);
@@ -221,10 +243,10 @@ namespace Topographer
             }
         }
 
-        private static int GetHeight(TAG_Compound[] sections, int x, int z, int yStart = 255)
+        private static int GetHeight(TAG_Compound[] sections, int x, int z, int yStart = 255, int yEnd = 0)
         {
             int h = yStart;
-            for (; h > 0; h--)
+            for (; h >= yEnd; h--)
             {
                 if (GetBlock(sections, x, h, z) != 0)
                 {

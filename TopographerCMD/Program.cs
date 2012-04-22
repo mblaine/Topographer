@@ -16,21 +16,25 @@ namespace TopographerCMD
 
             bool help = false;
             bool biomeMap = false;
-            String limitHeight = "255";
+            String upperLimit = "255";
+            String lowerLimit = "0";
             bool biomeFoliage = true;
             bool showHeight = true;
             bool transparency = true;
             bool dryRun = false;
             bool version = false;
+            String rotation = "0";
 
             OptionSet options = new OptionSet();
             options.Add("i|input=", "Path to directory containing *.mca region files. Can be relative to .minecraft/saves/.", delegate(String v) { inPath = v; });
             options.Add("o|output=", "Path including file name for where the output png will be saved.", delegate(String v) { outPath = v; });
-            options.Add("r|render=", "\"terrain\" to generate a terrain map or \"biomes\" to generate a color-coded biome map instead. Default: \"terrain\".", delegate(String v) { biomeMap = (v == "biomes"); });
-            options.Add("l|limit=", "Only render the world below this elevation, between 0 and 255. Default: 255.", delegate(String v) { limitHeight = v; });
+            options.Add("m|map=", "\"terrain\" to generate a terrain map or \"biomes\" to generate a color-coded biome map instead. Default: \"terrain\".", delegate(String v) { biomeMap = (v == "biomes"); });
+            options.Add("u|upper=", "Only render the world below this elevation, between 0 and 255. Default: 255.", delegate(String v) { upperLimit = v; });
+            options.Add("l|lower=", "Only render the world down to this elevation, between 0 and 255. Default: 0.", delegate(String v) { lowerLimit = v; });
             options.Add("b|biome", "Whether blocks such as grass should have their color vary based on biome. Default: enabled. Use -b+ to enable or -b- to disable.", delegate(String v) { biomeFoliage = (v != null); });
             options.Add("h|height", "Whether colors should be made lighter or darker based on elevation. Default: enabled. Use -h+ to enable or -h- to disable.", delegate(String v) { showHeight = (v != null); });
             options.Add("t|transparency", "Whether areas beneath blocks such as water or glass should be visible. Default: enabled. Use -t+ to enable or -t- to disable.", delegate(String v) { transparency = (v != null); });
+            options.Add("r|rotate=", "How much the resulting map should be rotated. Valid values are 0, 90, 180, and 270. Default: 0.", delegate(String v) { rotation = v; });
             options.Add("d|dry-run", "If parameters should be parsed and any errors reported without actually doing anything.", delegate(String v) { dryRun = (v != null); });
             options.Add("?|help", "Display this help message.", delegate(String v) { help = (v != null); });
             options.Add("v|version", "Display version information.", delegate(String v) { version = (v != null); });
@@ -52,7 +56,7 @@ namespace TopographerCMD
                 Console.WriteLine("Usage: TopographerCMD [OPTIONS] -i [DIRECTORY] -o [FILE]");
                 Console.WriteLine("Examples:");
                 Console.WriteLine("TopographerCMD /l 90 /h+ /t- -input /World1/DIM-1/region -output nether.png");
-                Console.WriteLine("TopographerCMD -render=biomes -i /World1/region -o World1.biomes.png");
+                Console.WriteLine("TopographerCMD -map=biomes -r 270 -i /World1/region -o World1.biomes.png");
                 Console.WriteLine();
                 Console.WriteLine("Options:");
                 options.WriteOptionDescriptions(Console.Out);
@@ -82,13 +86,38 @@ namespace TopographerCMD
                 return;
             }
 
-            byte limit = 255;
+            byte upper = 255;
+            byte lower = 0;
+            uint rotate = 0;
             if (!biomeMap)
             {
-                if (!byte.TryParse(limitHeight, out limit))
+                if (!byte.TryParse(upperLimit, out upper))
                 {
-                    Console.Error.WriteLine(String.Format("ERROR: Height limit must be between 0 and 255 inclusive. Unable to parse \"{0}\".", limitHeight));
+                    Console.Error.WriteLine(String.Format("ERROR: Upper limit must be between 0 and 255 inclusive. Unable to parse \"{0}\".", upperLimit));
                     return;
+                }
+
+                if (!byte.TryParse(lowerLimit, out lower))
+                {
+                    Console.Error.WriteLine(String.Format("ERROR: Lower limit must be between 0 and 255 inclusive. Unable to parse \"{0}\".", lowerLimit));
+                    return;
+                }
+
+                if (lower > upper)
+                {
+                    byte temp = lower;
+                    lower = upper;
+                    upper = temp;
+                }
+
+                if (!uint.TryParse(rotation, out rotate))
+                {
+                    Console.Error.WriteLine(String.Format("ERROR: Rotation must be a positive integer. Unable to parse \"{0}\".", rotation));
+                    return;
+                }
+                else
+                {
+                    rotate = ((rotate % 360) / 90) * 90;
                 }
             }
 
@@ -97,7 +126,7 @@ namespace TopographerCMD
             Console.WriteLine(String.Format("Rendering: {0}", biomeMap ? "biome map" : "terrain map"));
             if (!biomeMap)
             {
-                Console.WriteLine(String.Format("Rendering layers beginning at: {0}", limitHeight));
+                Console.WriteLine(String.Format("Rendering layers from {0} to {1}.", lower, upper));
                 if (biomeFoliage)
                     Console.WriteLine("Blocks such as grass will have their color vary based on biome.");
                 else
@@ -112,12 +141,19 @@ namespace TopographerCMD
                     Console.WriteLine("All blocks will be opaque.");
             }
 
+            if(rotate > 0)
+                Console.WriteLine(String.Format("Map will be rotated {0} degrees.", rotate));
+            else
+                Console.WriteLine("Map will not be rotated.");
+
             Renderer r = new Renderer(inPath, outPath, Console.Out);
-            r.LimitHeight = limit;
+            r.UpperLimit = upper;
+            r.LowerLimit = lower;
             r.ConsiderBiomes = biomeFoliage;
             r.ShowHeight = showHeight;
             r.Transparency = transparency;
             r.BiomeOverlay = biomeMap;
+            r.Rotate = rotate;
 
             if (dryRun)
                 Console.WriteLine(String.Format("Found {0} *.mcr region files.", Renderer.GetRegionCount(inPath)));
