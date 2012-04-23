@@ -1,3 +1,13 @@
+0.4 - 4/23/2012
+    * New options:
+        - Crop output image.
+        - Rotate output image.
+        - Only render certain block ids.
+        - Exclude certain block ids from being rendered.
+    * Some command line options were renamed/reorganized to support new
+      options. Anything passing arguments to TopographerCMD my break until
+      refactored.
+
 0.3 - 4/20/2012
     * Added command line interface. It should work the same as the gui.
         - Use "TopographerCMD --help" for usage information.
