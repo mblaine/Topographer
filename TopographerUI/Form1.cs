@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
@@ -130,6 +131,25 @@ namespace TopographerUI
 
         private void btnRender_Click(object sender, EventArgs e)
         {
+            HashSet<byte> set = null;
+            if (txtBlockIDs.Text.Trim().Length > 0)
+            {
+                String[] ids = txtBlockIDs.Text.Split(new char[] { ',' });
+                set = new HashSet<byte>();
+                foreach (String id in ids)
+                {
+                    byte b;
+                    if (byte.TryParse(id, out b))
+                    {
+                        set.Add(b);
+                    }
+                    else
+                    {
+                        MessageBox.Show(this, String.Format("\"Block IDs\" must be empty or a comma seperated list of block ids each between 0 and 255. Unable to parse\"{0}\".", id), "Topographer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
 
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.InitialDirectory = lastSavePath;
@@ -166,6 +186,11 @@ namespace TopographerUI
                     break;
             }
             r.CropMap = chkCrop.Checked;
+            if (radOnly.Checked)
+                r.Only = set;
+            else
+                r.Exclude = set;
+
             worker = new Thread(new ThreadStart(r.Render));
             worker.Start();
         }

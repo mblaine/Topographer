@@ -32,6 +32,9 @@ namespace Topographer
         public bool CropMap = true;
         public uint Rotate = 0;
 
+        public HashSet<byte> Only = null;
+        public HashSet<byte> Exclude = null;
+
         public Renderer(String regionDir, String outPath, UpdateStatus updateStatus = null, DoneCallback callback = null)
         {
             this.regionDir = regionDir;
@@ -58,6 +61,16 @@ namespace Topographer
                 int temp = LowerLimit;
                 LowerLimit = UpperLimit;
                 UpperLimit = temp;
+            }
+
+            if (Only != null && Exclude != null)
+            {
+                foreach (byte b in Exclude)
+                {
+                    if (Only.Contains(b))
+                        Only.Remove(b);
+                }
+                Exclude = null;
             }
 
             String[] paths = Directory.GetFiles(regionDir, "*.mca", SearchOption.TopDirectoryOnly);
@@ -176,8 +189,9 @@ namespace Topographer
             {
                 for (int x = 0; x < 16; x++)
                 {
-                    int y = GetHeight(sections, x, z, highest, LowerLimit);
-
+                    int y = GetHeight(sections, x, z, highest, LowerLimit, Only, Exclude);
+                    if (y < LowerLimit)
+                        continue;
                     byte id, data;
                     GetBlock(sections, x, y, z, out id, out data);
                     byte biome = 255;
@@ -192,6 +206,10 @@ namespace Topographer
                         while (color.A < 255 && y >= LowerLimit)
                         {
                             GetBlock(sections, x, y, z, out id, out data);
+                            if (Only != null && !Only.Contains(id))
+                                id = 0;
+                            if (Exclude != null && Exclude.Contains(id))
+                                id = 0;
                             Color c2 = ColorPalette.Lookup(id, data, biome);
                             color = Blend(color, c2);
                             y--;
@@ -243,17 +261,23 @@ namespace Topographer
             }
         }
 
-        private static int GetHeight(TAG_Compound[] sections, int x, int z, int yStart = 255, int yEnd = 0)
+        private static int GetHeight(TAG_Compound[] sections, int x, int z, int yStart = 255, int yEnd = 0, HashSet<byte> only = null, HashSet<byte> exclude = null)
         {
             int h = yStart;
             for (; h >= yEnd; h--)
             {
-                if (GetBlock(sections, x, h, z) != 0)
+                byte b = GetBlock(sections, x, h, z);
+                if (b != 0)
                 {
-                    return h;
+                    if(only != null && only.Contains(b))
+                        return h;
+                    else if(exclude != null && !exclude.Contains(b))
+                        return h;
+                    else if(only == null && exclude == null)
+                        return h;
                 }
             }
-            return h;
+            return yEnd - 1;
         }
 
         private static byte GetBlock(TAG_Compound[] sections, int x, int y, int z)
