@@ -27,7 +27,7 @@
 14;928e7d #gold ore
 15;89837f #iron ore
 16;727272 #coal ore
-17;a38452 #log
+17;755829 #log
 18;0,7,9;375c1e #leaves (Ocean)
 18;1,16;3a5e09 #leaves (Plains)
 18;2,8,17;615906 #leaves (Desert)
