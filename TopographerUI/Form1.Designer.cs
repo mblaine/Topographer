@@ -38,12 +38,6 @@
             this.btnRender = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.txtBlockIDs = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.radExclude = new System.Windows.Forms.RadioButton();
-            this.radOnly = new System.Windows.Forms.RadioButton();
-            this.chkCrop = new System.Windows.Forms.CheckBox();
-            this.cmbRotate = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.spnLowerLimit = new System.Windows.Forms.NumericUpDown();
             this.chkTransparency = new System.Windows.Forms.CheckBox();
@@ -51,6 +45,12 @@
             this.chkBiomeFoliage = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.spnUpperLimit = new System.Windows.Forms.NumericUpDown();
+            this.txtBlockIDs = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.radExclude = new System.Windows.Forms.RadioButton();
+            this.radOnly = new System.Windows.Forms.RadioButton();
+            this.chkCrop = new System.Windows.Forms.CheckBox();
+            this.cmbRotate = new System.Windows.Forms.ComboBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.radTerrain = new System.Windows.Forms.RadioButton();
             this.radBiomes = new System.Windows.Forms.RadioButton();
@@ -152,7 +152,7 @@
             this.btnRender.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRender.Name = "btnRender";
             this.btnRender.Size = new System.Drawing.Size(108, 23);
-            this.btnRender.TabIndex = 3;
+            this.btnRender.TabIndex = 4;
             this.btnRender.Text = "Render";
             this.toolTip.SetToolTip(this.btnRender, "Generate and save a map of the chosen world.");
             this.btnRender.UseVisualStyleBackColor = true;
@@ -165,7 +165,7 @@
             this.lblStatus.Location = new System.Drawing.Point(12, 182);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(711, 23);
-            this.lblStatus.TabIndex = 4;
+            this.lblStatus.TabIndex = 8;
             this.lblStatus.Text = "Ready";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -186,76 +186,6 @@
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Options";
-            // 
-            // txtBlockIDs
-            // 
-            this.txtBlockIDs.Location = new System.Drawing.Point(82, 46);
-            this.txtBlockIDs.Name = "txtBlockIDs";
-            this.txtBlockIDs.Size = new System.Drawing.Size(96, 22);
-            this.txtBlockIDs.TabIndex = 12;
-            this.toolTip.SetToolTip(this.txtBlockIDs, "An optional comma separated list of block IDs.");
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 48);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 17);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Block IDs:";
-            this.toolTip.SetToolTip(this.label3, "An optional comma separated list of block IDs.");
-            // 
-            // radExclude
-            // 
-            this.radExclude.AutoSize = true;
-            this.radExclude.Location = new System.Drawing.Point(82, 21);
-            this.radExclude.Name = "radExclude";
-            this.radExclude.Size = new System.Drawing.Size(78, 21);
-            this.radExclude.TabIndex = 10;
-            this.radExclude.Text = "Exclude";
-            this.toolTip.SetToolTip(this.radExclude, "Render everything but blocks specified in the box to the right.");
-            this.radExclude.UseVisualStyleBackColor = true;
-            // 
-            // radOnly
-            // 
-            this.radOnly.AutoSize = true;
-            this.radOnly.Checked = true;
-            this.radOnly.Location = new System.Drawing.Point(6, 21);
-            this.radOnly.Name = "radOnly";
-            this.radOnly.Size = new System.Drawing.Size(58, 21);
-            this.radOnly.TabIndex = 9;
-            this.radOnly.TabStop = true;
-            this.radOnly.Text = "Only";
-            this.toolTip.SetToolTip(this.radOnly, "Render only blocks specified in the box to the right.");
-            this.radOnly.UseVisualStyleBackColor = true;
-            // 
-            // chkCrop
-            // 
-            this.chkCrop.AutoSize = true;
-            this.chkCrop.Checked = true;
-            this.chkCrop.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkCrop.Location = new System.Drawing.Point(6, 51);
-            this.chkCrop.Name = "chkCrop";
-            this.chkCrop.Size = new System.Drawing.Size(60, 21);
-            this.chkCrop.TabIndex = 8;
-            this.chkCrop.Text = "Crop";
-            this.toolTip.SetToolTip(this.chkCrop, "If checked empty portions along the edges of the map are cropped.");
-            this.chkCrop.UseVisualStyleBackColor = true;
-            // 
-            // cmbRotate
-            // 
-            this.cmbRotate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRotate.FormattingEnabled = true;
-            this.cmbRotate.Items.AddRange(new object[] {
-            "Rotate 0°",
-            "Rotate 90°",
-            "Rotate 180°",
-            "Rotate 270°"});
-            this.cmbRotate.Location = new System.Drawing.Point(6, 21);
-            this.cmbRotate.Name = "cmbRotate";
-            this.cmbRotate.Size = new System.Drawing.Size(121, 24);
-            this.cmbRotate.TabIndex = 7;
-            this.toolTip.SetToolTip(this.cmbRotate, "How much the output map should be rotated.");
             // 
             // label2
             // 
@@ -278,7 +208,7 @@
             0});
             this.spnLowerLimit.Name = "spnLowerLimit";
             this.spnLowerLimit.Size = new System.Drawing.Size(56, 22);
-            this.spnLowerLimit.TabIndex = 5;
+            this.spnLowerLimit.TabIndex = 1;
             this.toolTip.SetToolTip(this.spnLowerLimit, "Only render the world above the specified elevation.");
             // 
             // chkTransparency
@@ -349,6 +279,76 @@
             0,
             0});
             // 
+            // txtBlockIDs
+            // 
+            this.txtBlockIDs.Location = new System.Drawing.Point(82, 46);
+            this.txtBlockIDs.Name = "txtBlockIDs";
+            this.txtBlockIDs.Size = new System.Drawing.Size(96, 22);
+            this.txtBlockIDs.TabIndex = 3;
+            this.toolTip.SetToolTip(this.txtBlockIDs, "An optional comma separated list of block IDs.");
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 48);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(70, 17);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Block IDs:";
+            this.toolTip.SetToolTip(this.label3, "An optional comma separated list of block IDs.");
+            // 
+            // radExclude
+            // 
+            this.radExclude.AutoSize = true;
+            this.radExclude.Location = new System.Drawing.Point(82, 21);
+            this.radExclude.Name = "radExclude";
+            this.radExclude.Size = new System.Drawing.Size(78, 21);
+            this.radExclude.TabIndex = 1;
+            this.radExclude.Text = "Exclude";
+            this.toolTip.SetToolTip(this.radExclude, "Render everything but blocks specified in the box to the right.");
+            this.radExclude.UseVisualStyleBackColor = true;
+            // 
+            // radOnly
+            // 
+            this.radOnly.AutoSize = true;
+            this.radOnly.Checked = true;
+            this.radOnly.Location = new System.Drawing.Point(6, 21);
+            this.radOnly.Name = "radOnly";
+            this.radOnly.Size = new System.Drawing.Size(58, 21);
+            this.radOnly.TabIndex = 0;
+            this.radOnly.TabStop = true;
+            this.radOnly.Text = "Only";
+            this.toolTip.SetToolTip(this.radOnly, "Render only blocks specified in the box to the right.");
+            this.radOnly.UseVisualStyleBackColor = true;
+            // 
+            // chkCrop
+            // 
+            this.chkCrop.AutoSize = true;
+            this.chkCrop.Checked = true;
+            this.chkCrop.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkCrop.Location = new System.Drawing.Point(6, 51);
+            this.chkCrop.Name = "chkCrop";
+            this.chkCrop.Size = new System.Drawing.Size(60, 21);
+            this.chkCrop.TabIndex = 1;
+            this.chkCrop.Text = "Crop";
+            this.toolTip.SetToolTip(this.chkCrop, "If checked empty portions along the edges of the map are cropped.");
+            this.chkCrop.UseVisualStyleBackColor = true;
+            // 
+            // cmbRotate
+            // 
+            this.cmbRotate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbRotate.FormattingEnabled = true;
+            this.cmbRotate.Items.AddRange(new object[] {
+            "Rotate 0°",
+            "Rotate 90°",
+            "Rotate 180°",
+            "Rotate 270°"});
+            this.cmbRotate.Location = new System.Drawing.Point(6, 21);
+            this.cmbRotate.Name = "cmbRotate";
+            this.cmbRotate.Size = new System.Drawing.Size(121, 24);
+            this.cmbRotate.TabIndex = 0;
+            this.toolTip.SetToolTip(this.cmbRotate, "How much the output map should be rotated.");
+            // 
             // toolTip
             // 
             this.toolTip.AutomaticDelay = 400;
@@ -387,7 +387,7 @@
             this.groupBox3.Location = new System.Drawing.Point(263, 39);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(174, 53);
-            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Render";
             // 
@@ -400,7 +400,7 @@
             this.groupBox4.Location = new System.Drawing.Point(394, 96);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(184, 80);
-            this.groupBox4.TabIndex = 7;
+            this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Blocks";
             // 
@@ -411,7 +411,7 @@
             this.groupBox5.Location = new System.Drawing.Point(584, 96);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(143, 80);
-            this.groupBox5.TabIndex = 8;
+            this.groupBox5.TabIndex = 7;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Output";
             // 
