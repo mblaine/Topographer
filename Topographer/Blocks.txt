@@ -1,15 +1,15 @@
 0;00000000 #air
 1;7e7e7e #stone
 2,31;0,7,9;55773f #grass, tall grass (Ocean)
-2,31;1,16;587a2d #grass, tall grass (Plains)
-2,31;2,8,17;7c752b #grass, tall grass (Desert)
-2,31;3,20;537452 #grass, tall grass (Mountains)
-2,31;4,18;467d2e #grass, tall grass (Forest)
+2,31;1,16;688f35 #grass, tall grass (Plains)
+2,31;2,8,17;7a8f35 #grass, tall grass (Desert)
+2,31;3,20;638a61 #grass, tall grass (Mountains)
+2,31;4,18;4f8c34 #grass, tall grass (Forest)
 2,31;5,19;4d745a #grass, tall grass (Taiga)
 2,31;10,11,12,13;4c735d #grass, tall grass (Snow)
 2,31;14,15;2b8319 #grass, tall grass (Mushroom)
-2,31;21,22;298413 #grass, tall grass (Jungle)
-2,31;6;2f3926 #grass, tall grass (Swamp)
+2,31;21,22;309916 #grass, tall grass (Jungle)
+2,31;6;39452e #grass, tall grass (Swamp)
 2,31;62a238 #grass, tall grass (default (Forest))
 3;866043 #dirt
 4;7c7c7c #cobble
