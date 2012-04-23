@@ -38,19 +38,32 @@
             this.btnRender = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtBlockIDs = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.radExclude = new System.Windows.Forms.RadioButton();
+            this.radOnly = new System.Windows.Forms.RadioButton();
+            this.chkCrop = new System.Windows.Forms.CheckBox();
+            this.cmbRotate = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.spnLowerLimit = new System.Windows.Forms.NumericUpDown();
             this.chkTransparency = new System.Windows.Forms.CheckBox();
             this.chkHeight = new System.Windows.Forms.CheckBox();
             this.chkBiomeFoliage = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.spnLimitHeight = new System.Windows.Forms.NumericUpDown();
+            this.spnUpperLimit = new System.Windows.Forms.NumericUpDown();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.radTerrain = new System.Windows.Forms.RadioButton();
             this.radBiomes = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.spnLimitHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spnLowerLimit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spnUpperLimit)).BeginInit();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtWorldPath
@@ -61,13 +74,13 @@
             this.txtWorldPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtWorldPath.Name = "txtWorldPath";
             this.txtWorldPath.ReadOnly = true;
-            this.txtWorldPath.Size = new System.Drawing.Size(425, 22);
+            this.txtWorldPath.Size = new System.Drawing.Size(597, 22);
             this.txtWorldPath.TabIndex = 0;
             // 
             // btnOpenWorld
             // 
             this.btnOpenWorld.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenWorld.Location = new System.Drawing.Point(443, 11);
+            this.btnOpenWorld.Location = new System.Drawing.Point(615, 11);
             this.btnOpenWorld.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnOpenWorld.Name = "btnOpenWorld";
             this.btnOpenWorld.Size = new System.Drawing.Size(108, 23);
@@ -135,7 +148,7 @@
             // 
             this.btnRender.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRender.Enabled = false;
-            this.btnRender.Location = new System.Drawing.Point(443, 39);
+            this.btnRender.Location = new System.Drawing.Point(615, 39);
             this.btnRender.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRender.Name = "btnRender";
             this.btnRender.Size = new System.Drawing.Size(108, 23);
@@ -149,35 +162,131 @@
             // 
             this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblStatus.Location = new System.Drawing.Point(12, 151);
+            this.lblStatus.Location = new System.Drawing.Point(12, 182);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(539, 23);
+            this.lblStatus.Size = new System.Drawing.Size(711, 23);
             this.lblStatus.TabIndex = 4;
             this.lblStatus.Text = "Ready";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.spnLowerLimit);
             this.groupBox2.Controls.Add(this.chkTransparency);
             this.groupBox2.Controls.Add(this.chkHeight);
             this.groupBox2.Controls.Add(this.chkBiomeFoliage);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.spnLimitHeight);
+            this.groupBox2.Controls.Add(this.spnUpperLimit);
             this.groupBox2.Location = new System.Drawing.Point(12, 96);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox2.Size = new System.Drawing.Size(539, 53);
+            this.groupBox2.Size = new System.Drawing.Size(376, 80);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Options";
+            // 
+            // txtBlockIDs
+            // 
+            this.txtBlockIDs.Location = new System.Drawing.Point(82, 46);
+            this.txtBlockIDs.Name = "txtBlockIDs";
+            this.txtBlockIDs.Size = new System.Drawing.Size(96, 22);
+            this.txtBlockIDs.TabIndex = 12;
+            this.toolTip.SetToolTip(this.txtBlockIDs, "An optional comma separated list of block IDs.");
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 48);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(70, 17);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Block IDs:";
+            this.toolTip.SetToolTip(this.label3, "An optional comma separated list of block IDs.");
+            // 
+            // radExclude
+            // 
+            this.radExclude.AutoSize = true;
+            this.radExclude.Location = new System.Drawing.Point(82, 21);
+            this.radExclude.Name = "radExclude";
+            this.radExclude.Size = new System.Drawing.Size(78, 21);
+            this.radExclude.TabIndex = 10;
+            this.radExclude.Text = "Exclude";
+            this.toolTip.SetToolTip(this.radExclude, "Render everything but blocks specified in the box to the right.");
+            this.radExclude.UseVisualStyleBackColor = true;
+            // 
+            // radOnly
+            // 
+            this.radOnly.AutoSize = true;
+            this.radOnly.Checked = true;
+            this.radOnly.Location = new System.Drawing.Point(6, 21);
+            this.radOnly.Name = "radOnly";
+            this.radOnly.Size = new System.Drawing.Size(58, 21);
+            this.radOnly.TabIndex = 9;
+            this.radOnly.TabStop = true;
+            this.radOnly.Text = "Only";
+            this.toolTip.SetToolTip(this.radOnly, "Render only blocks specified in the box to the right.");
+            this.radOnly.UseVisualStyleBackColor = true;
+            // 
+            // chkCrop
+            // 
+            this.chkCrop.AutoSize = true;
+            this.chkCrop.Checked = true;
+            this.chkCrop.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkCrop.Location = new System.Drawing.Point(6, 51);
+            this.chkCrop.Name = "chkCrop";
+            this.chkCrop.Size = new System.Drawing.Size(60, 21);
+            this.chkCrop.TabIndex = 8;
+            this.chkCrop.Text = "Crop";
+            this.toolTip.SetToolTip(this.chkCrop, "If checked empty portions along the edges of the map are cropped.");
+            this.chkCrop.UseVisualStyleBackColor = true;
+            // 
+            // cmbRotate
+            // 
+            this.cmbRotate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbRotate.FormattingEnabled = true;
+            this.cmbRotate.Items.AddRange(new object[] {
+            "Rotate 0°",
+            "Rotate 90°",
+            "Rotate 180°",
+            "Rotate 270°"});
+            this.cmbRotate.Location = new System.Drawing.Point(6, 21);
+            this.cmbRotate.Name = "cmbRotate";
+            this.cmbRotate.Size = new System.Drawing.Size(121, 24);
+            this.cmbRotate.TabIndex = 7;
+            this.toolTip.SetToolTip(this.cmbRotate, "How much the output map should be rotated.");
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(5, 51);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(83, 17);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Lower Limit:";
+            this.toolTip.SetToolTip(this.label2, "Only render the world above the specified elevation.");
+            // 
+            // spnLowerLimit
+            // 
+            this.spnLowerLimit.Location = new System.Drawing.Point(97, 49);
+            this.spnLowerLimit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.spnLowerLimit.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.spnLowerLimit.Name = "spnLowerLimit";
+            this.spnLowerLimit.Size = new System.Drawing.Size(56, 22);
+            this.spnLowerLimit.TabIndex = 5;
+            this.toolTip.SetToolTip(this.spnLowerLimit, "Only render the world above the specified elevation.");
             // 
             // chkTransparency
             // 
             this.chkTransparency.AutoSize = true;
             this.chkTransparency.Checked = true;
             this.chkTransparency.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkTransparency.Location = new System.Drawing.Point(372, 24);
+            this.chkTransparency.Location = new System.Drawing.Point(170, 47);
             this.chkTransparency.Name = "chkTransparency";
             this.chkTransparency.Size = new System.Drawing.Size(118, 21);
             this.chkTransparency.TabIndex = 4;
@@ -216,25 +325,25 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(5, 25);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(86, 17);
+            this.label1.Size = new System.Drawing.Size(84, 17);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Limit Height:";
+            this.label1.Text = "Upper Limit:";
             this.toolTip.SetToolTip(this.label1, "Only render the world below the specified elevation.");
             // 
-            // spnLimitHeight
+            // spnUpperLimit
             // 
-            this.spnLimitHeight.Location = new System.Drawing.Point(97, 23);
-            this.spnLimitHeight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.spnLimitHeight.Maximum = new decimal(new int[] {
+            this.spnUpperLimit.Location = new System.Drawing.Point(97, 23);
+            this.spnUpperLimit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.spnUpperLimit.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.spnLimitHeight.Name = "spnLimitHeight";
-            this.spnLimitHeight.Size = new System.Drawing.Size(56, 22);
-            this.spnLimitHeight.TabIndex = 0;
-            this.toolTip.SetToolTip(this.spnLimitHeight, "Only render the world below the specified elevation.");
-            this.spnLimitHeight.Value = new decimal(new int[] {
+            this.spnUpperLimit.Name = "spnUpperLimit";
+            this.spnUpperLimit.Size = new System.Drawing.Size(56, 22);
+            this.spnUpperLimit.TabIndex = 0;
+            this.toolTip.SetToolTip(this.spnUpperLimit, "Only render the world below the specified elevation.");
+            this.spnUpperLimit.Value = new decimal(new int[] {
             255,
             0,
             0,
@@ -282,11 +391,37 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Render";
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.txtBlockIDs);
+            this.groupBox4.Controls.Add(this.label3);
+            this.groupBox4.Controls.Add(this.radExclude);
+            this.groupBox4.Controls.Add(this.radOnly);
+            this.groupBox4.Location = new System.Drawing.Point(394, 96);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(184, 80);
+            this.groupBox4.TabIndex = 7;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Blocks";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.chkCrop);
+            this.groupBox5.Controls.Add(this.cmbRotate);
+            this.groupBox5.Location = new System.Drawing.Point(584, 96);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(143, 80);
+            this.groupBox5.TabIndex = 8;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Output";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(563, 179);
+            this.ClientSize = new System.Drawing.Size(735, 210);
+            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.lblStatus);
@@ -305,9 +440,14 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.spnLimitHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spnLowerLimit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spnUpperLimit)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -325,7 +465,7 @@
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown spnLimitHeight;
+        private System.Windows.Forms.NumericUpDown spnUpperLimit;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.CheckBox chkTransparency;
         private System.Windows.Forms.CheckBox chkHeight;
@@ -333,6 +473,16 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RadioButton radBiomes;
         private System.Windows.Forms.RadioButton radTerrain;
+        private System.Windows.Forms.ComboBox cmbRotate;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown spnLowerLimit;
+        private System.Windows.Forms.CheckBox chkCrop;
+        private System.Windows.Forms.RadioButton radOnly;
+        private System.Windows.Forms.TextBox txtBlockIDs;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RadioButton radExclude;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox5;
     }
 }
 

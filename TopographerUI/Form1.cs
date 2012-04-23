@@ -19,6 +19,7 @@ namespace TopographerUI
         {
             InitializeComponent();
             this.AcceptButton = btnRender;
+            this.cmbRotate.SelectedIndex = 0;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -143,11 +144,28 @@ namespace TopographerUI
             EnableControls(false);
 
             Renderer r = new Renderer(regionPath, dialog.FileName, UpdateStatus, ThreadDone);
-            r.UpperLimit = (int)spnLimitHeight.Value;
+            r.UpperLimit = (int)spnUpperLimit.Value;
+            r.LowerLimit = (int)spnLowerLimit.Value;
             r.ConsiderBiomes = chkBiomeFoliage.Checked;
             r.ShowHeight = chkHeight.Checked;
             r.Transparency = chkTransparency.Checked;
             r.BiomeOverlay = radBiomes.Checked;
+            switch ((String)cmbRotate.SelectedItem)
+            {
+                case "Rotate 90°":
+                    r.Rotate = 90;
+                    break;
+                case "Rotate 180°":
+                    r.Rotate = 180;
+                    break;
+                case "Rotate 270°":
+                    r.Rotate = 270;
+                    break;
+                default:
+                    r.Rotate = 0;
+                    break;
+            }
+            r.CropMap = chkCrop.Checked;
             worker = new Thread(new ThreadStart(r.Render));
             worker.Start();
         }
