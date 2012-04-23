@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -24,6 +25,9 @@ namespace TopographerCMD
             bool dryRun = false;
             bool version = false;
             String rotation = "0";
+            bool crop = true;
+            String only = null;
+            String exclude = null;
 
             OptionSet options = new OptionSet();
             options.Add("i|input=", "Path to directory containing *.mca region files. Can be relative to .minecraft/saves/.", delegate(String v) { inPath = v; });
@@ -34,7 +38,10 @@ namespace TopographerCMD
             options.Add("b|biome", "Whether blocks such as grass should have their color vary based on biome. Default: enabled. Use -b+ to enable or -b- to disable.", delegate(String v) { biomeFoliage = (v != null); });
             options.Add("h|height", "Whether colors should be made lighter or darker based on elevation. Default: enabled. Use -h+ to enable or -h- to disable.", delegate(String v) { showHeight = (v != null); });
             options.Add("t|transparency", "Whether areas beneath blocks such as water or glass should be visible. Default: enabled. Use -t+ to enable or -t- to disable.", delegate(String v) { transparency = (v != null); });
+            options.Add("n|only=", "A comma separated list of block ids that will be the only type(s) of blocks rendered.", delegate(String v) { only = v; });
+            options.Add("x|exclude=", "A comma separated list of block ids that will not be rendered.", delegate(String v) { exclude = v; });
             options.Add("r|rotate=", "How much the resulting map should be rotated. Valid values are 0, 90, 180, and 270. Default: 0.", delegate(String v) { rotation = v; });
+            options.Add("c|crop", "If empty portions along the edges of the map should be cropped. Default: enabled. Use -c+ to enable or -c- to disable.", delegate(String v) { crop = (v != null); });
             options.Add("d|dry-run", "If parameters should be parsed and any errors reported without actually doing anything.", delegate(String v) { dryRun = (v != null); });
             options.Add("?|help", "Display this help message.", delegate(String v) { help = (v != null); });
             options.Add("v|version", "Display version information.", delegate(String v) { version = (v != null); });
@@ -57,6 +64,7 @@ namespace TopographerCMD
                 Console.WriteLine("Examples:");
                 Console.WriteLine("TopographerCMD /l 90 /h+ /t- -input /World1/DIM-1/region -output nether.png");
                 Console.WriteLine("TopographerCMD -map=biomes -r 270 -i /World1/region -o World1.biomes.png");
+                Console.WriteLine("TopographerCMD -x \"8,9,78,79\" --crop- -i /World1/region -o dry.png");
                 Console.WriteLine();
                 Console.WriteLine("Options:");
                 options.WriteOptionDescriptions(Console.Out);
@@ -121,6 +129,56 @@ namespace TopographerCMD
                 }
             }
 
+            HashSet<byte> onlyIds = null;
+            if (only != null && only.Length > 0)
+            {
+                String[] ids = only.Split(new char[] { ',' });
+                onlyIds = new HashSet<byte>();
+                foreach (String id in ids)
+                {
+                    byte b;
+                    if (byte.TryParse(id, out b))
+                    {
+                        onlyIds.Add(b);
+                    }
+                    else
+                    {
+                        Console.Error.WriteLine(String.Format("ERROR: Only must be a comma seperated list of block ids each between 0 and 255. Unable to parse\"{0}\".", id));
+                        return;
+                    }
+                }
+            }
+
+            HashSet<byte> excludeIds = null;
+            if (exclude != null && exclude.Length > 0)
+            {
+                String[] ids = exclude.Split(new char[] { ',' });
+                excludeIds = new HashSet<byte>();
+                foreach (String id in ids)
+                {
+                    byte b;
+                    if (byte.TryParse(id, out b))
+                    {
+                        excludeIds.Add(b);
+                    }
+                    else
+                    {
+                        Console.Error.WriteLine(String.Format("ERROR: Exclude must be a comma seperated list of block ids each between 0 and 255. Unable to parse\"{0}\".", id));
+                        return;
+                    }
+                }
+            }
+
+            if (onlyIds != null && excludeIds != null)
+            {
+                foreach (byte b in excludeIds)
+                {
+                    if (onlyIds.Contains(b))
+                        onlyIds.Remove(b);
+                }
+                excludeIds = null;
+            }
+
             Console.WriteLine(String.Format("Input: {0}", inPath));
             Console.WriteLine(String.Format("Output: {0}", outPath));
             Console.WriteLine(String.Format("Rendering: {0}", biomeMap ? "biome map" : "terrain map"));
@@ -141,10 +199,29 @@ namespace TopographerCMD
                     Console.WriteLine("All blocks will be opaque.");
             }
 
+            if (onlyIds != null)
+            {
+                List<byte> l = new List<byte>(onlyIds);
+                l.Sort();
+                Console.WriteLine(String.Format("Only block ids {0} will be rendered.", String.Join<byte>(", ", l)));
+            }
+
+            if (excludeIds != null)
+            {
+                List<byte> l = new List<byte>(excludeIds);
+                l.Sort();
+                Console.WriteLine(String.Format("All blocks except block ids {0} will be rendered.", String.Join<byte>(", ", l)));
+            }
+
             if(rotate > 0)
                 Console.WriteLine(String.Format("Map will be rotated {0} degrees.", rotate));
             else
                 Console.WriteLine("Map will not be rotated.");
+
+            if (crop)
+                Console.WriteLine("Map will be cropped.");
+            else
+                Console.WriteLine("Map will not be cropped.");
 
             Renderer r = new Renderer(inPath, outPath, Console.Out);
             r.UpperLimit = upper;
@@ -153,7 +230,10 @@ namespace TopographerCMD
             r.ShowHeight = showHeight;
             r.Transparency = transparency;
             r.BiomeOverlay = biomeMap;
+            r.Only = onlyIds;
+            r.Exclude = excludeIds;
             r.Rotate = rotate;
+            r.CropMap = crop;
 
             if (dryRun)
                 Console.WriteLine(String.Format("Found {0} *.mcr region files.", Renderer.GetRegionCount(inPath)));
