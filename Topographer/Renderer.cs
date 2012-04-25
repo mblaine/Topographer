@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Text.RegularExpressions;
 using Minecraft;
 
 namespace Topographer
@@ -52,7 +53,6 @@ namespace Topographer
 
         public void Render()
         {
-            List<MapPiece> pieces = new List<MapPiece>();
             Point topLeft = new Point(int.MaxValue, int.MaxValue);
             Point bottomRight = new Point(int.MinValue, int.MinValue);
 
@@ -75,25 +75,10 @@ namespace Topographer
 
             String[] paths = Directory.GetFiles(regionDir, "*.mca", SearchOption.TopDirectoryOnly);
             
-            String format = String.Format("Reading region {{0}} of {0}", paths.Length);
-            int count = 0;
             foreach (String path in paths)
             {
-                count++;
-                if (updateStatus != null)
-                    updateStatus(String.Format(format, count));
-                if (log != null)
-                {
-                    log.Write(String.Format(format, count));
-                    log.WriteLine(String.Format(" :: {0}", Path.GetFileName(path)));
-                }
-                RegionFile region = new RegionFile(path);
-                if (BiomeOverlay)
-                    pieces.Add(new MapPiece(RenderRegionBiomes(region), region.Coords));
-                else
-                    pieces.Add(new MapPiece(RenderRegion(region), region.Coords));
-
-                Coord c = new Coord(region.Coords);
+                Match m = Regex.Match(path, @"r\.(-?\d+)\.(-?\d+)\.mc[ar]");
+                Coord c = new Coord(int.Parse(m.Groups[1].Value), int.Parse(m.Groups[2].Value));
                 c.RegiontoAbsolute();
                 if (c.X < topLeft.X)
                     topLeft.X = c.X;
@@ -107,20 +92,27 @@ namespace Topographer
             }
 
             Bitmap map = new Bitmap(bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y);
-            if (updateStatus != null)
-                updateStatus("Combining region maps");
-            if (log != null)
-                log.WriteLine("Combining region maps");
-            using (Graphics g = Graphics.FromImage(map))
+            String format = String.Format("Reading region {{0}} of {0}", paths.Length);
+            int count = 0;
+            foreach (String path in paths)
             {
-                foreach (MapPiece piece in pieces)
+                count++;
+                if (updateStatus != null)
+                    updateStatus(String.Format(format, count));
+                if (log != null)
                 {
-                    Coord offset = new Coord(piece.Coords);
-                    offset.RegiontoAbsolute();
-                    offset.Add(-topLeft.X, -topLeft.Y);
-                    g.DrawImage(piece.Image, offset.X, offset.Z);
-                    piece.Dispose();
+                    log.Write(String.Format(format, count));
+                    log.WriteLine(String.Format(" :: {0}", Path.GetFileName(path)));
                 }
+                RegionFile region = new RegionFile(path);
+                Coord offset = new Coord(region.Coords);
+                offset.RegiontoAbsolute();
+                offset.Add(-topLeft.X, -topLeft.Y);
+
+                if (BiomeOverlay)
+                    RenderRegionBiomes(region, map, offset.X, offset.Z);
+                else
+                    RenderRegion(region, map, offset.X, offset.Z);
             }
 
             if(CropMap)
@@ -144,10 +136,8 @@ namespace Topographer
                 callback();
         }
 
-        private Bitmap RenderRegion(RegionFile region)
+        private Bitmap RenderRegion(RegionFile region, Bitmap b, int offsetX, int offsetY)
         {
-            Bitmap b = new Bitmap(REGIONWIDTH, REGIONHEIGHT);
-
             foreach (Chunk c in region.Chunks)
             {
                 if (c == null || c.Root == null)
@@ -155,7 +145,7 @@ namespace Topographer
                 Coord chunkOffset = new Coord(c.Coords);
                 chunkOffset.ChunktoRegionRelative();
                 chunkOffset.ChunktoAbsolute();
-                RenderChunk(c, b, chunkOffset.X, chunkOffset.Z);
+                RenderChunk(c, b, offsetX + chunkOffset.X, offsetY + chunkOffset.Z);
             }
 
             return b;
@@ -229,10 +219,8 @@ namespace Topographer
             }
         }
 
-        private Bitmap RenderRegionBiomes(RegionFile region)
+        private Bitmap RenderRegionBiomes(RegionFile region, Bitmap b, int offsetX, int offsetY)
         {
-            Bitmap b = new Bitmap(REGIONWIDTH, REGIONHEIGHT);
-
             foreach (Chunk c in region.Chunks)
             {
                 if (c == null || c.Root == null)
@@ -240,7 +228,7 @@ namespace Topographer
                 Coord chunkOffset = new Coord(c.Coords);
                 chunkOffset.ChunktoRegionRelative();
                 chunkOffset.ChunktoAbsolute();
-                RenderChunkBiomes(c, b, chunkOffset.X, chunkOffset.Z);
+                RenderChunkBiomes(c, b, offsetX + chunkOffset.X, offsetY + chunkOffset.Z);
             }
 
             return b;

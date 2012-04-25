@@ -1,3 +1,10 @@
+0.4.1 - 4/25/2012
+	* All memory for final image allocated at the start. Halves the amount of
+	  memory previously needed at the end to combine the image parts into the
+	  final output. If the program is going to run out of memory it should
+	  happen nearly immediately. Not a permanent solution, but should allow
+	  larger worlds approaching 1000 regions to be rendered and saved properly.
+
 0.4 - 4/23/2012
     * New options:
         - Crop output image.
