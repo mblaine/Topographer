@@ -33,6 +33,8 @@ namespace Topographer
         public bool CropMap = true;
         public uint Rotate = 0;
 
+        public bool LowerMemory = true;
+
         public HashSet<byte> Only = null;
         public HashSet<byte> Exclude = null;
 
@@ -91,43 +93,103 @@ namespace Topographer
                     bottomRight.Y = c.Z;
             }
 
-            Bitmap map = new Bitmap(bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y);
             String format = String.Format("Reading region {{0}} of {0}", paths.Length);
             int count = 0;
-            foreach (String path in paths)
+
+            if (LowerMemory)
             {
-                count++;
-                if (updateStatus != null)
-                    updateStatus(String.Format(format, count));
-                if (log != null)
+                int regionsWide = (bottomRight.X - topLeft.X) / REGIONWIDTH;
+                int regionsTall = (bottomRight.Y - topLeft.Y) / REGIONHEIGHT;
+                Point regionTopLeft = new Point(topLeft.X / REGIONWIDTH, topLeft.Y / REGIONHEIGHT);
+                String[,] regions = new String[regionsWide, regionsTall];
+
+                foreach (String path in paths)
                 {
-                    log.Write(String.Format(format, count));
-                    log.WriteLine(String.Format(" :: {0}", Path.GetFileName(path)));
+                    Match m = Regex.Match(path, @"r\.(-?\d+)\.(-?\d+)\.mc[ar]");
+                    Coord c = new Coord(int.Parse(m.Groups[1].Value), int.Parse(m.Groups[2].Value));
+                    c.Add(-regionTopLeft.X, -regionTopLeft.Y);
+                    regions[c.X, c.Z] = path;
                 }
-                RegionFile region = new RegionFile(path);
-                Coord offset = new Coord(region.Coords);
-                offset.RegiontoAbsolute();
-                offset.Add(-topLeft.X, -topLeft.Y);
 
-                if (BiomeOverlay)
-                    RenderRegionBiomes(region, map, offset.X, offset.Z);
-                else
-                    RenderRegion(region, map, offset.X, offset.Z);
+                Bitmap strip = new Bitmap(bottomRight.X - topLeft.X, REGIONHEIGHT, PixelFormat.Format32bppArgb);
+                PngWriter writer = new PngWriter(outPath, bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y);
+
+                for (int y = 0; y < regionsTall; y++)
+                {
+                    using (Graphics g = Graphics.FromImage(strip))
+                    {
+                        g.Clear(Color.Transparent);
+                    }
+
+                    for (int x = 0; x < regionsWide; x++)
+                    {
+                        if (regions[x, y] != null)
+                        {
+                            count++;
+                            if (updateStatus != null)
+                                updateStatus(String.Format(format, count));
+                            if (log != null)
+                            {
+                                log.Write(String.Format(format, count));
+                                log.WriteLine(String.Format(" :: {0}", Path.GetFileName(regions[x, y])));
+                            }
+
+                            RegionFile region = new RegionFile(regions[x, y]);
+                            Coord offset = new Coord(region.Coords);
+                            offset.RegiontoAbsolute();
+                            offset.X -= topLeft.X;
+
+                            if (BiomeOverlay)
+                                RenderRegionBiomes(region, strip, offset.X, 0);
+                            else
+                                RenderRegion(region, strip, offset.X, 0);
+                        }
+                    }
+                    writer.WriteBitmap(strip);
+                }
+
+                writer.Close();
+                strip.Dispose();
             }
+            else
+            {
+                Bitmap map = new Bitmap(bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y);
+                foreach (String path in paths)
+                {
+                    count++;
+                    if (updateStatus != null)
+                        updateStatus(String.Format(format, count));
+                    if (log != null)
+                    {
+                        log.Write(String.Format(format, count));
+                        log.WriteLine(String.Format(" :: {0}", Path.GetFileName(path)));
+                    }
+                    RegionFile region = new RegionFile(path);
+                    Coord offset = new Coord(region.Coords);
+                    offset.RegiontoAbsolute();
+                    offset.Add(-topLeft.X, -topLeft.Y);
 
-            if(CropMap)
-                map = Crop(map);
-            Rotate = (Rotate % 360) / 90;
-            if (Rotate == 1)
-                map.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            else if (Rotate == 2)
-                map.RotateFlip(RotateFlipType.Rotate180FlipNone);
-            else if (Rotate == 3)
-                map.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                    if (BiomeOverlay)
+                        RenderRegionBiomes(region, map, offset.X, offset.Z);
+                    else
+                        RenderRegion(region, map, offset.X, offset.Z);
+                }
 
-            map.Save(outPath, ImageFormat.Png);
-            map.Dispose();
+                if (CropMap)
+                    map = Crop(map);
+                Rotate = (Rotate % 360) / 90;
+                if (Rotate == 1)
+                    map.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                else if (Rotate == 2)
+                    map.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                else if (Rotate == 3)
+                    map.RotateFlip(RotateFlipType.Rotate270FlipNone);
 
+                map.Save(outPath, ImageFormat.Png);
+                map.Dispose();
+
+            }
+            
             if (updateStatus != null)
                 updateStatus("Done");
             if (log != null)

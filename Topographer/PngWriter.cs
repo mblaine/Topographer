@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
+using Ionic.Zlib;
+using System.Runtime.InteropServices;
 
 namespace Topographer
 {
@@ -17,7 +20,7 @@ namespace Topographer
         private static void GenerateTable()
         {
             uint c;
-
+            table = new uint[256];
             for (int n = 0; n < 256; n++)
             {
                 c = (uint)n;
@@ -57,7 +60,7 @@ namespace Topographer
 
         public PngWriter(String path, int width, int height)
         {
-            FileStream s = new FileStream(path, FileMode.OpenOrCreate | FileMode.Truncate);
+            FileStream s = File.Exists(path) ? File.Open(path, FileMode.Truncate) : File.Open(path, FileMode.Create);
             writer = new BinaryWriter(s);
             BeginWrite(width, height);
         }
@@ -96,7 +99,7 @@ namespace Topographer
             data[9] = 6; //color type (rgba)
             data[10] = 0; //compression method (deflate)
             data[11] = 0; //filter method (adaptive)
-            data[12] = 0; //interlace method (nnone)
+            data[12] = 0; //interlace method (none)
 
             WriteChunk("IHDR", data);
 
@@ -112,14 +115,14 @@ namespace Topographer
             WriteChunk("gAMA", data);
             
             data = new byte[9];
-            temp = BitConverter.GetBytes(4724); //no idea, but it's what Bitmap.Save() produces
+            temp = BitConverter.GetBytes(4724); //pixels per meter at 120 dpi
             if (BitConverter.IsLittleEndian)
                 Array.Reverse(temp);
 
             Array.Copy(temp, 0, data, 0, 4);
             Array.Copy(temp, 0, data, 4, 4);
 
-            data[8] = 0; //unit specifier (unknown)
+            data[8] = 1; //unit specifier (meter)
 
             WriteChunk("pHYs", data);
         }
@@ -131,24 +134,23 @@ namespace Topographer
 
         private void WriteChunk(String type, byte[] data)
         {
-            byte[] chunk = new byte[data.Length + 8];
+            byte[] chunk = new byte[data.Length + 4];
 
-            byte[] temp = BitConverter.GetBytes(data.Length);
+            byte[] length = BitConverter.GetBytes(data.Length);
             if (BitConverter.IsLittleEndian)
-                Array.Reverse(temp);
+                Array.Reverse(length);
+                
+            byte[] temp = ASCIIEncoding.ASCII.GetBytes(type);
 
             Array.Copy(temp, 0, chunk, 0, 4);
-                
-            temp = ASCIIEncoding.ASCII.GetBytes(type);
 
-            Array.Copy(temp, 0, chunk, 4, 4);
-
-            Array.Copy(data, 0, chunk, 8, data.Length);
+            Array.Copy(data, 0, chunk, 4, data.Length);
 
             temp = BitConverter.GetBytes(CRC32.Calculate(chunk));
             if (BitConverter.IsLittleEndian)
                 Array.Reverse(temp);
-            
+
+            writer.Write(length);
             writer.Write(chunk);
             writer.Write(temp);
         }
@@ -160,6 +162,44 @@ namespace Topographer
 
             if (b.Width != Width)
                 throw new ArgumentException(String.Format("The width of the supplied bitmap ({0}) must match the width of the output png ({1}).", b.Width, Width));
+
+            BitmapData bData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            byte[] data = new byte[b.Width * b.Height * 4];
+            Marshal.Copy(bData.Scan0, data, 0, data.Length);
+            b.UnlockBits(bData);
+
+            MemoryStream mem = new MemoryStream();
+            ZlibStream zlib = new ZlibStream(mem, CompressionMode.Compress);
+            byte[] filterType = new byte[] { 0 }; //none
+            byte[] pixel = new byte[4];
+            int lineWidth = b.Width * 4;
+            for (int y = 0; y < b.Height; y++)
+            {
+                zlib.Write(filterType, 0, 1);
+                for (int x = 0; x < b.Width; x++)
+                {
+                    int offset = y * lineWidth + x * 4;
+                    //needs to be rgba
+                    if (BitConverter.IsLittleEndian)
+                    {
+                        pixel[2] = data[offset]; //b
+                        pixel[1] = data[offset + 1]; //g
+                        pixel[0] = data[offset + 2]; //r
+                        pixel[3] = data[offset + 3]; //a
+                    }
+                    else
+                    {
+                        pixel[3] = data[offset]; //a
+                        pixel[0] = data[offset + 1]; //r
+                        pixel[1] = data[offset + 2]; //g
+                        pixel[2] = data[offset + 3]; //b
+                    }
+                    
+                    zlib.Write(pixel, 0, 4);
+                }
+            }
+            zlib.Close();
+            WriteChunk("IDAT", mem.ToArray());
         }
 
         public void Close()
