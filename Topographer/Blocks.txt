@@ -14,9 +14,9 @@
 3;866043 #dirt
 4;7c7c7c #cobble
 5,34,47,64,85,96,107;a08250 #planks, piston extension, wood door, bookshelf, fence, hatch, gate
-5:1;765834 #pine planks
-5:2;d4c285 #birch planks
-5:3;a97b58 #jungle planks
+5:1,125:1,126:1,126:9;765834 #pine planks, slabs
+5:2,125:2,126:2,126:10;d4c285 #birch planks, slabs
+5:3,125:3,126:3,126:11;a97b58 #jungle planks, slabs
 6;408f2f #sapling
 7;323232 #bedrock
 8,9;6;665e86b4 #water (Swamp)
@@ -80,7 +80,7 @@
 42,71,101;e0e0e0 #iron block, door, bars
 43:0,44:0,44:8;a3a3a3 #stone slabs
 43:1,44:1,44:9;dad29f #sandstone slabs
-43:2,44:2,44:10,53;a08250 #wood slabs, stairs
+43:2,44:2,44:10,53,125:0,126:0,126:8;a08250 #wood slabs, stairs, new slabs
 43:3,44:3,44:11,67;7c7c7c #cobble slabs, stairs
 43:4,44:4,44:12,108;916052 #bricks slabs, stairs
 43:5,44:5,44:13,109;7d7d7d #stone brick slabs, stairs

@@ -76,7 +76,7 @@ namespace Topographer.PNG
             WriteChunk("gAMA", data);
             
             data = new byte[9];
-            temp = BitConverter.GetBytes(4724); //pixels per meter at 120 dpi
+            temp = BitConverter.GetBytes(3779); //pixels per meter at 96 dpi
             if (BitConverter.IsLittleEndian)
                 Array.Reverse(temp);
 
@@ -90,8 +90,10 @@ namespace Topographer.PNG
 
         private void EndWrite()
         {
-            zstream.Close();
-            WriteChunk("IDAT", dstream.GetDataSoFar());
+            if(zstream != null)
+                zstream.Close();
+            if(dstream != null)
+                WriteChunk("IDAT", dstream.GetDataSoFar());
             WriteChunk("IEND", new byte[0]);
         }
 

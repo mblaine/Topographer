@@ -42,7 +42,9 @@ namespace TopographerUI
         {
             foreach(Control c in this.Controls)
             {
-                if (!(c is Label))
+                if (enable && c == grpOutput)
+                    c.Enabled = !chkLessMemory.Checked;
+                else if(!(c is Label))
                     c.Enabled = enable;
             }
         }
@@ -170,6 +172,7 @@ namespace TopographerUI
             r.ShowHeight = chkHeight.Checked;
             r.Transparency = chkTransparency.Checked;
             r.BiomeOverlay = radBiomes.Checked;
+            r.LessMemory = chkLessMemory.Checked;
             switch ((String)cmbRotate.SelectedItem)
             {
                 case "Rotate 90°":
@@ -237,5 +240,11 @@ namespace TopographerUI
                 }
             }
         }
+
+        private void chkLessMemory_CheckedChanged(object sender, EventArgs e)
+        {
+            grpOutput.Enabled = !chkLessMemory.Checked;
+        }
+
     }
 }

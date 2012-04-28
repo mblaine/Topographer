@@ -56,14 +56,17 @@
             this.radBiomes = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.grpOutput = new System.Windows.Forms.GroupBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.chkLessMemory = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spnLowerLimit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spnUpperLimit)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.groupBox5.SuspendLayout();
+            this.grpOutput.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtWorldPath
@@ -404,23 +407,47 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Blocks";
             // 
-            // groupBox5
+            // grpOutput
             // 
-            this.groupBox5.Controls.Add(this.chkCrop);
-            this.groupBox5.Controls.Add(this.cmbRotate);
-            this.groupBox5.Location = new System.Drawing.Point(584, 96);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(143, 80);
-            this.groupBox5.TabIndex = 7;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Output";
+            this.grpOutput.Controls.Add(this.chkCrop);
+            this.grpOutput.Controls.Add(this.cmbRotate);
+            this.grpOutput.Location = new System.Drawing.Point(584, 96);
+            this.grpOutput.Name = "grpOutput";
+            this.grpOutput.Size = new System.Drawing.Size(143, 80);
+            this.grpOutput.TabIndex = 7;
+            this.grpOutput.TabStop = false;
+            this.grpOutput.Text = "Output";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.chkLessMemory);
+            this.groupBox6.Location = new System.Drawing.Point(443, 39);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(166, 53);
+            this.groupBox6.TabIndex = 9;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Memory";
+            // 
+            // chkLessMemory
+            // 
+            this.chkLessMemory.AutoSize = true;
+            this.chkLessMemory.Location = new System.Drawing.Point(6, 23);
+            this.chkLessMemory.Name = "chkLessMemory";
+            this.chkLessMemory.Size = new System.Drawing.Size(114, 21);
+            this.chkLessMemory.TabIndex = 0;
+            this.chkLessMemory.Text = "Less Memory";
+            this.toolTip.SetToolTip(this.chkLessMemory, "Generate the map in such a way that less memory is used, however cropping and rot" +
+        "ating isn\'t supported. May be necessary for worlds with 100s of regions.");
+            this.chkLessMemory.UseVisualStyleBackColor = true;
+            this.chkLessMemory.CheckedChanged += new System.EventHandler(this.chkLessMemory_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(735, 210);
-            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.grpOutput);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -446,8 +473,10 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.grpOutput.ResumeLayout(false);
+            this.grpOutput.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -482,7 +511,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.RadioButton radExclude;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox grpOutput;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.CheckBox chkLessMemory;
     }
 }
 

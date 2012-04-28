@@ -28,6 +28,7 @@ namespace TopographerCMD
             bool crop = true;
             String only = null;
             String exclude = null;
+            bool lessMemory = false;
 
             OptionSet options = new OptionSet();
             options.Add("i|input=", "Path to directory containing *.mca region files. Can be relative to .minecraft/saves/.", delegate(String v) { inPath = v; });
@@ -42,6 +43,7 @@ namespace TopographerCMD
             options.Add("x|exclude=", "A comma separated list of block ids that will not be rendered.", delegate(String v) { exclude = v; });
             options.Add("r|rotate=", "How much the resulting map should be rotated. Valid values are 0, 90, 180, and 270. Default: 0.", delegate(String v) { rotation = v; });
             options.Add("c|crop", "If empty portions along the edges of the map should be cropped. Default: enabled. Use -c+ to enable or -c- to disable.", delegate(String v) { crop = (v != null); });
+            options.Add("y|less-memory", "Generate the map in such a way that less memory is used, however cropping and rotating isn't supported. May be necessary for worlds with 100s of regions. Default: enabled. Use -y+ to enable or -y- to disable.", delegate(String v) { lessMemory = (v != null); });
             options.Add("d|dry-run", "If parameters should be parsed and any errors reported without actually doing anything.", delegate(String v) { dryRun = (v != null); });
             options.Add("?|help", "Display this help message.", delegate(String v) { help = (v != null); });
             options.Add("v|version", "Display version information.", delegate(String v) { version = (v != null); });
@@ -213,12 +215,17 @@ namespace TopographerCMD
                 Console.WriteLine(String.Format("All blocks except block ids {0} will be rendered.", String.Join<byte>(", ", l)));
             }
 
-            if(rotate > 0)
+            if (lessMemory)
+                Console.WriteLine("The map will be generated using the algorithm that requires less memory.");
+            else
+                Console.WriteLine("The map will be generated using the normal algorithm.");
+            
+            if(!lessMemory && rotate > 0)
                 Console.WriteLine(String.Format("Map will be rotated {0} degrees.", rotate));
             else
                 Console.WriteLine("Map will not be rotated.");
 
-            if (crop)
+            if (!lessMemory && crop)
                 Console.WriteLine("Map will be cropped.");
             else
                 Console.WriteLine("Map will not be cropped.");
@@ -234,6 +241,7 @@ namespace TopographerCMD
             r.Exclude = excludeIds;
             r.Rotate = rotate;
             r.CropMap = crop;
+            r.LessMemory = lessMemory;
 
             if (dryRun)
                 Console.WriteLine(String.Format("Found {0} *.mcr region files.", Renderer.GetRegionCount(inPath)));

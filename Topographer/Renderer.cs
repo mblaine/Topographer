@@ -34,7 +34,7 @@ namespace Topographer
         public bool CropMap = true;
         public uint Rotate = 0;
 
-        public bool LowerMemory = true;
+        public bool LessMemory = false;
 
         public HashSet<byte> Only = null;
         public HashSet<byte> Exclude = null;
@@ -97,7 +97,7 @@ namespace Topographer
             String format = String.Format("Reading region {{0}} of {0}", paths.Length);
             int count = 0;
 
-            if (LowerMemory)
+            if (LessMemory)
             {
                 int regionsWide = (bottomRight.X - topLeft.X) / REGIONWIDTH;
                 int regionsTall = (bottomRight.Y - topLeft.Y) / REGIONHEIGHT;
