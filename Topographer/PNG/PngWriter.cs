@@ -10,8 +10,11 @@ namespace Topographer.PNG
 {
     public class PngWriter : IDisposable
     {
-        BinaryWriter writer = null;
-        bool disposed = false;
+        private BinaryWriter writer = null;
+        private bool disposed = false;
+
+        private ZlibStream zstream = null;
+        private DataStream dstream = null;
 
         public int Width { get; private set; }
         public int Height { get; private set; }
@@ -87,6 +90,8 @@ namespace Topographer.PNG
 
         private void EndWrite()
         {
+            zstream.Close();
+            WriteChunk("IDAT", dstream.GetDataSoFar());
             WriteChunk("IEND", new byte[0]);
         }
 
@@ -126,15 +131,17 @@ namespace Topographer.PNG
             Marshal.Copy(bData.Scan0, data, 0, data.Length);
             b.UnlockBits(bData);
 
-            MemoryStream mem = new MemoryStream();
-            ZlibStream zlib = new ZlibStream(mem, CompressionMode.Compress);
+            if (dstream == null)
+                dstream = new DataStream();
+            if (zstream == null)
+                zstream = new ZlibStream(dstream, CompressionMode.Compress);
 
             byte[] filterType = new byte[] { 0 }; //none
             byte[] pixel = new byte[4];
             int lineWidth = b.Width * 4;
             for (int y = 0; y < b.Height; y++)
             {
-                zlib.Write(filterType, 0, 1);
+                zstream.Write(filterType, 0, 1);
                 for (int x = 0; x < b.Width; x++)
                 {
                     int offset = y * lineWidth + x * 4;
@@ -154,11 +161,11 @@ namespace Topographer.PNG
                         pixel[2] = data[offset + 3]; //b
                     }
                     
-                    zlib.Write(pixel, 0, 4);
+                    zstream.Write(pixel, 0, 4);
                 }
             }
-            zlib.Close();
-            WriteChunk("IDAT", mem.ToArray());
+            zstream.Flush();
+            WriteChunk("IDAT", dstream.GetDataSoFar());
         }
 
         public void Close()
