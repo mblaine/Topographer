@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Text.RegularExpressions;
 using Minecraft;
+using Topographer.PNG;
 
 namespace Topographer
 {
