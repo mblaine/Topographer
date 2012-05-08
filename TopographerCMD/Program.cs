@@ -43,7 +43,7 @@ namespace TopographerCMD
             options.Add("x|exclude=", "A comma separated list of block ids that will not be rendered.", delegate(String v) { exclude = v; });
             options.Add("r|rotate=", "How much the resulting map should be rotated. Valid values are 0, 90, 180, and 270. Default: 0.", delegate(String v) { rotation = v; });
             options.Add("c|crop", "If empty portions along the edges of the map should be cropped. Default: enabled. Use -c+ to enable or -c- to disable.", delegate(String v) { crop = (v != null); });
-            options.Add("y|less-memory", "Generate the map in such a way that less memory is used, however cropping and rotating isn't supported. May be necessary for worlds with 100s of regions. Default: enabled. Use -y+ to enable or -y- to disable.", delegate(String v) { lessMemory = (v != null); });
+            options.Add("y|less-memory", "Generate the map in such a way that less memory is used, however cropping and rotating isn't supported. May be necessary for worlds with 100s of regions. Default: disabled. Use -y+ to enable or -y- to disable.", delegate(String v) { lessMemory = (v != null); });
             options.Add("d|dry-run", "If parameters should be parsed and any errors reported without actually doing anything.", delegate(String v) { dryRun = (v != null); });
             options.Add("?|help", "Display this help message.", delegate(String v) { help = (v != null); });
             options.Add("v|version", "Display version information.", delegate(String v) { version = (v != null); });
