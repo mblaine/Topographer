@@ -34,7 +34,7 @@ namespace Minecraft
 
             byte[] header = new byte[8192];
 
-            using (BinaryReader file = new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+            using (BinaryReader file = new BinaryReader(File.Open(path, FileMode.Open,FileAccess.Read, FileShare.ReadWrite)))
             {
                 file.Read(header, 0, 8192);
 

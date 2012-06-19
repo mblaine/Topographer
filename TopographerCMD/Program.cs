@@ -26,6 +26,7 @@ namespace TopographerCMD
             bool version = false;
             String rotation = "0";
             bool crop = true;
+            bool slices = false;
             String only = null;
             String exclude = null;
             bool lessMemory = false;
@@ -36,6 +37,7 @@ namespace TopographerCMD
             options.Add("m|map=", "\"terrain\" to generate a terrain map or \"biomes\" to generate a color-coded biome map instead. Default: \"terrain\".", delegate(String v) { biomeMap = (v == "biomes"); });
             options.Add("u|upper=", "Only render the world below this elevation, between 0 and 255. Default: 255.", delegate(String v) { upperLimit = v; });
             options.Add("l|lower=", "Only render the world down to this elevation, between 0 and 255. Default: 0.", delegate(String v) { lowerLimit = v; });
+            options.Add("s|slices", "Renders map in slices between -l and -u. Files will be -o with a number nnn. Default: disabled. Use -s+ to enable or -s- to disable.", delegate(String v) { slices = (v != null); });
             options.Add("b|biome", "Whether blocks such as grass should have their color vary based on biome. Default: enabled. Use -b+ to enable or -b- to disable.", delegate(String v) { biomeFoliage = (v != null); });
             options.Add("h|height", "Whether colors should be made lighter or darker based on elevation. Default: enabled. Use -h+ to enable or -h- to disable.", delegate(String v) { showHeight = (v != null); });
             options.Add("t|transparency", "Whether areas beneath blocks such as water or glass should be visible. Default: enabled. Use -t+ to enable or -t- to disable.", delegate(String v) { transparency = (v != null); });
@@ -186,7 +188,11 @@ namespace TopographerCMD
             Console.WriteLine(String.Format("Rendering: {0}", biomeMap ? "biome map" : "terrain map"));
             if (!biomeMap)
             {
-                Console.WriteLine(String.Format("Rendering layers from {0} to {1}.", lower, upper));
+                
+                if (slices)
+                    Console.WriteLine(String.Format("Rendering slices for the layers from {0} to {1}.", lower, upper));
+                else
+                    Console.WriteLine(String.Format("Rendering layers from {0} to {1}.", lower, upper));
                 if (biomeFoliage)
                     Console.WriteLine("Blocks such as grass will have their color vary based on biome.");
                 else
@@ -229,7 +235,6 @@ namespace TopographerCMD
                 Console.WriteLine("Map will be cropped.");
             else
                 Console.WriteLine("Map will not be cropped.");
-
             Renderer r = new Renderer(inPath, outPath, Console.Out);
             r.UpperLimit = upper;
             r.LowerLimit = lower;
@@ -242,11 +247,26 @@ namespace TopographerCMD
             r.Rotate = rotate;
             r.CropMap = crop;
             r.LessMemory = lessMemory;
-
-            if (dryRun)
-                Console.WriteLine(String.Format("Found {0} *.mcr region files.", Renderer.GetRegionCount(inPath)));
+            
+            if (!slices)
+                if (dryRun)
+                    Console.WriteLine(String.Format("Found {0} *.mcr region files.", Renderer.GetRegionCount(inPath)));
+                else
+                    r.Render();
             else
-                r.Render();
+                for (int h=lower;h<=upper;h++)
+                {
+                    r.sliceHeight = h;
+                    r.UpperLimit = h;
+                    r.LowerLimit = h;
+                    String newFile = String.Format("{0}{1}{2}{3}", Path.GetFileNameWithoutExtension(outPath), "Slice", (h + 1), Path.GetExtension(outPath));
+                    String fullNewPath = Path.GetDirectoryName(r.outPath);
+                    r.outPath = Path.Combine(fullNewPath, newFile);
+                    if (dryRun)
+                        Console.WriteLine(String.Format("Found {0} *.mcr region files.", Renderer.GetRegionCount(inPath)));
+                    else
+                        r.RenderSlice();
+                }
         }
     }
 }
