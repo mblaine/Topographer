@@ -23,10 +23,11 @@ namespace Topographer
         private const int REGIONHEIGHT = 512;
 
         private String regionDir;
-        private String outPath;
+        public String outPath;
 
         public int LowerLimit = 0;
         public int UpperLimit = 255;
+        public int sliceHeight = 60;
         public bool ConsiderBiomes = true;
         public bool ShowHeight = true;
         public bool Transparency = true;
@@ -54,6 +55,144 @@ namespace Topographer
             this.log = log;
         }
 
+        public void Renderslice()
+        {
+            Point topLeft = new Point(int.MaxValue, int.MaxValue);
+            Point bottomRight = new Point(int.MinValue, int.MinValue);
+            if (sliceHeight > UpperLimit)
+                sliceHeight = UpperLimit;
+            if (sliceHeight < LowerLimit)
+                sliceHeight = LowerLimit;
+            if (Only != null && Exclude != null)
+            {
+                foreach (byte b in Exclude)
+                {
+                    if (Only.Contains(b))
+                        Only.Remove(b);
+                }
+                Exclude = null;
+            }
+            String[] paths = Directory.GetFiles(regionDir, "*.mca", SearchOption.TopDirectoryOnly);
+            foreach (String path in paths)
+            {
+                Match m = Regex.Match(path, @"r\.(-?\d+)\.(-?\d+)\.mc[ar]");
+                Coord c = new Coord(int.Parse(m.Groups[1].Value), int.Parse(m.Groups[2].Value));
+                c.RegiontoAbsolute();
+                if (c.X < topLeft.X)
+                    topLeft.X = c.X;
+                if (c.Z < topLeft.Y)
+                    topLeft.Y = c.Z;
+                c.Add(REGIONWIDTH, REGIONHEIGHT);
+                if (c.X > bottomRight.X)
+                    bottomRight.X = c.X;
+                if (c.Z > bottomRight.Y)
+                    bottomRight.Y = c.Z;
+            }
+
+            String format = String.Format("Reading region {{0}} of {0}", paths.Length);
+            int count = 0;
+
+            if (LessMemory)
+            {
+                int regionsWide = (bottomRight.X - topLeft.X) / REGIONWIDTH;
+                int regionsTall = (bottomRight.Y - topLeft.Y) / REGIONHEIGHT;
+                Point regionTopLeft = new Point(topLeft.X / REGIONWIDTH, topLeft.Y / REGIONHEIGHT);
+                String[,] regions = new String[regionsWide, regionsTall];
+
+                foreach (String path in paths)
+                {
+                    Match m = Regex.Match(path, @"r\.(-?\d+)\.(-?\d+)\.mc[ar]");
+                    Coord c = new Coord(int.Parse(m.Groups[1].Value), int.Parse(m.Groups[2].Value));
+                    c.Add(-regionTopLeft.X, -regionTopLeft.Y);
+                    regions[c.X, c.Z] = path;
+                }
+
+                Bitmap strip = new Bitmap(bottomRight.X - topLeft.X, REGIONHEIGHT, PixelFormat.Format32bppArgb);
+                PngWriter writer = new PngWriter(outPath, bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y);
+
+                for (int y = 0; y < regionsTall; y++)
+                {
+                    using (Graphics g = Graphics.FromImage(strip))
+                    {
+                        g.Clear(Color.Transparent);
+                    }
+
+                    for (int x = 0; x < regionsWide; x++)
+                    {
+                        if (regions[x, y] != null)
+                        {
+                            count++;
+                            if (updateStatus != null)
+                                updateStatus(String.Format(format, count));
+                            if (log != null)
+                            {
+                                log.Write(String.Format(format, count));
+                                log.WriteLine(String.Format(" :: {0}", Path.GetFileName(regions[x, y])));
+                            }
+
+                            RegionFile region = new RegionFile(regions[x, y]);
+                            Coord offset = new Coord(region.Coords);
+                            offset.RegiontoAbsolute();
+                            offset.X -= topLeft.X;
+
+                            if (BiomeOverlay)
+                                RenderRegionBiomes(region, strip, offset.X, 0);
+                            else
+                                RenderRegion(region, strip, offset.X, 0);
+                        }
+                    }
+                    writer.WriteBitmap(strip);
+                }
+
+                writer.Close();
+                strip.Dispose();
+            }
+            else
+            {
+                Bitmap map = new Bitmap(bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y);
+                foreach (String path in paths)
+                {
+                    count++;
+                    if (updateStatus != null)
+                        updateStatus(String.Format(format, count));
+                    if (log != null)
+                    {
+                        log.Write(String.Format(format, count));
+                        log.WriteLine(String.Format(" :: {0}", Path.GetFileName(path)));
+                    }
+                    RegionFile region = new RegionFile(path);
+                    Coord offset = new Coord(region.Coords);
+                    offset.RegiontoAbsolute();
+                    offset.Add(-topLeft.X, -topLeft.Y);
+
+                    if (BiomeOverlay)
+                        RenderRegionBiomes(region, map, offset.X, offset.Z);
+                    else
+                        RenderRegion(region, map, offset.X, offset.Z);
+                }
+
+                if (CropMap)
+                    map = Crop(map);
+                Rotate = (Rotate % 360) / 90;
+                if (Rotate == 1)
+                    map.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                else if (Rotate == 2)
+                    map.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                else if (Rotate == 3)
+                    map.RotateFlip(RotateFlipType.Rotate270FlipNone);
+
+                map.Save(outPath, ImageFormat.Png);
+                map.Dispose();
+
+            }
+
+            if (updateStatus != null)
+                updateStatus("Done");
+            if (log != null)
+                log.WriteLine("Done");
+            if (callback != null)
+                callback();
+        }
         public void Render()
         {
             Point topLeft = new Point(int.MaxValue, int.MaxValue);

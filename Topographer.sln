@@ -1,18 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopographerUI", "TopographerUI\TopographerUI.csproj", "{AFBA495F-D604-48BA-84C6-294AFF7A8C63}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Topographer", "Topographer\Topographer.csproj", "{15541DFB-773B-478A-BE05-FC23F7055BC4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minecraft", "Minecraft\Minecraft.csproj", "{250DBE26-8C5E-4E63-8DE9-CE4AAD652FC7}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{95FFF03E-6547-4CB4-9E23-F4789EDFC729}"
-	ProjectSection(SolutionItems) = preProject
-		CHANGELOG.txt = CHANGELOG.txt
-		LICENSE.txt = LICENSE.txt
-		README.txt = README.txt
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopographerCMD", "TopographerCMD\TopographerCMD.csproj", "{58BA0482-C575-4878-B186-2870AC4C4C5C}"
 EndProject
